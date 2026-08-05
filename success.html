@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setting up your system — NYANSATEK Systems</title>
+<meta name="theme-color" content="#0D1320">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 2 L30 9.5 L30 24.5 L17 32 L4 24.5 L4 9.5 Z" stroke="#E3A54C" stroke-width="1.4"/>
+        <path d="M17 2 V17 M17 17 L30 9.5 M17 17 L4 9.5 M17 17 V32" stroke="#3E9088" stroke-width="1.2"/>
+        <circle cx="17" cy="17" r="2.6" fill="#E3A54C"/>
+      </svg>
+      <span>NYANSATEK<small>Systems</small></span>
+    </a>
+    <nav class="nav-links"></nav>
+  </div>
+</header>
+
+<div class="success-wrap">
+  <div class="success-icon">✓</div>
+  <span class="eyebrow" style="justify-content:center;">Payment received</span>
+  <h1 style="font-size:30px; margin-top:14px;">We're setting up your system now</h1>
+  <p style="color:var(--text-dim); margin-top:12px;">
+    This usually takes under a minute. Keep this tab open — we'll show you the login
+    the moment it's ready, and send a copy by SMS and email.
+  </p>
+
+  <div class="provision-steps" id="provision-steps">
+    <div class="provision-step done" data-step="payment">
+      <span class="dot">✓</span> Payment verified
+    </div>
+    <div class="provision-step active" data-step="account">
+      <span class="dot"></span> Creating your business account
+    </div>
+    <div class="provision-step pending" data-step="data">
+      <span class="dot"></span> Setting up starter data
+    </div>
+    <div class="provision-step pending" data-step="notify">
+      <span class="dot"></span> Sending login by SMS &amp; email
+    </div>
+  </div>
+
+  <div id="result-block" style="display:none;">
+    <div style="background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius); padding:24px; text-align:left; margin-bottom:24px;">
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Your login</div>
+      <table class="spec-table" style="margin-top:0;">
+        <tr><td>System</td><td id="res-system">—</td></tr>
+        <tr><td>Login URL</td><td id="res-url">—</td></tr>
+        <tr><td>Business / username</td><td id="res-username">—</td></tr>
+        <tr><td>Temporary password</td><td id="res-password">—</td></tr>
+      </table>
+      <p class="hint" style="margin-top:14px;">You'll be asked to set a new password the first time you sign in.</p>
+    </div>
+    <a href="#" id="go-to-system" class="btn btn-gold btn-block">Open my system</a>
+  </div>
+
+  <div id="error-block" style="display:none;">
+    <div class="status-msg error show">
+      Setup is taking longer than expected. Your payment was received — no action needed on your part.
+      We'll email your login shortly. If you don't see it within 15 minutes, contact
+      <a href="mailto:support@nyansatek.systems" style="color:inherit; text-decoration:underline;">support@nyansatek.systems</a>
+      or call 0536 340 578 with your payment reference below.
+    </div>
+    <p style="font-family:var(--font-mono); font-size:13px; color:var(--text-faint); margin-top:16px;">
+      Reference: <span id="err-ref">—</span>
+    </p>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="wrap footer-bottom">
+    <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
+    <a href="index.html" style="color:var(--gold);">Back to home</a>
+  </div>
+</footer>
+
+<script src="js/success.js"></script>
+</body>
+</html>

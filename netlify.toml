@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Keep secret keys server-side only — these are read from
+# Netlify environment variables (Site settings → Environment),
+# never committed here:
+#   PAYSTACK_SECRET_KEY
+#   SUPABASE_POS_URL / SUPABASE_POS_SERVICE_ROLE_KEY        (nyansatek.shop's project — also holds provisioning_jobs)
+#   SUPABASE_SCHOOL_URL / SUPABASE_SCHOOL_SERVICE_ROLE_KEY  (nyansatek-attendance's project)
+#   HUBTEL_CLIENT_ID / HUBTEL_CLIENT_SECRET / HUBTEL_SENDER_ID
+#   RESEND_API_KEY / EMAIL_FROM
