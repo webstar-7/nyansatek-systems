@@ -9,19 +9,18 @@ const CATALOG = {
     name: "NYANSATEK POS",
     loginUrl: "https://nyansatek.shop",
     plans: {
-      standard: { label: "Single store", price: 12000, cycle: "monthly" },
-      multi:    { label: "Up to 3 stores", price: 26000, cycle: "monthly" },
-      yearly:   { label: "Single store — yearly", price: 120000, cycle: "yearly" },
+      standard: { label: "Single store", price: 120, cycle: "monthly" },
+      multi:    { label: "Up to 3 stores", price: 260, cycle: "monthly" },
+      yearly:   { label: "Single store — yearly", price: 1200, cycle: "yearly" },
     },
   },
   school: {
     name: "NYANSATEK School",
-    // TODO: swap to https://nyansatek.school once that domain is live
-    loginUrl: "https://nyansatek-attendance.netlify.app",
+    loginUrl: "https://nyansatek.school",
     plans: {
-      standard: { label: "Up to 300 students", price: 15000, cycle: "monthly" },
-      multi:    { label: "Up to 800 students", price: 28000, cycle: "monthly" },
-      yearly:   { label: "Up to 300 students — yearly", price: 150000, cycle: "yearly" },
+      standard: { label: "Up to 300 students", price: 150, cycle: "monthly" },
+      multi:    { label: "Up to 800 students", price: 280, cycle: "monthly" },
+      yearly:   { label: "Up to 300 students — yearly", price: 1500, cycle: "yearly" },
     },
   },
 };
