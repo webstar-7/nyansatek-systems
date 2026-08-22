@@ -17,7 +17,7 @@ const NYANSATEK_CATALOG = {
   },
   school: {
     name: "NYANSATEK School",
-    liveUrl: "https://nyansatek-attendance.netlify.app",
+    liveUrl: "https://nyansatek.school",
     plans: {
       standard: { label: "Up to 300 students", price: 15000, cycle: "monthly", cycleLabel: "per month" },
       multi:    { label: "Up to 800 students", price: 28000, cycle: "monthly", cycleLabel: "per month" },
