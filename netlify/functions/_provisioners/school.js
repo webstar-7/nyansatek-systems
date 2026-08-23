@@ -30,22 +30,39 @@
                      class_teacher, class_teacher_id, is_active,
                      created_at)
 
+   IMPORTANT — discovered via pg_trigger (Aug 2026): this project
+   has an existing trigger `on_inst_user_created` that fires
+   AFTER INSERT on auth.users and runs handle_new_inst_user(),
+   which does:
+       insert into public.inst_profiles (id, role) values (new.id, 'gate');
+   That means the moment we create the auth user below, a bare
+   inst_profiles row ALREADY EXISTS with role='gate' and every
+   other column NULL. We must UPDATE that row, not INSERT a new
+   one — an insert collides on the primary key every time.
+
    Provisioning steps:
-     1. Create a Supabase Auth user (email + temp password)
+     1. Create a Supabase Auth user (email + temp password) —
+        the trigger fires automatically here, creating a bare
+        inst_profiles row we don't control the initial contents of.
      2. Create the institutions row (type = 'school')
-     3. Create the inst_profiles row, id = that auth user's id,
-        role = 'admin'
+     3. UPDATE the (already-existing) inst_profiles row: set
+        institution_id, display_name, email, phone, is_active,
+        must_change_password, and correct role to 'admin'
+        (overriding the trigger's default 'gate').
      4. Create the inst_login_lookup row so name-based login
         actually resolves to the right account
      5. Seed a first class so the school isn't empty on login
 
    If any step after (1) fails, the auth user is rolled back
-   (deleted) so a failed purchase never leaves an orphaned login
-   with no institution/profile behind it.
+   (deleted) — which also removes the trigger-created
+   inst_profiles row via cascade, since it's tied to auth.users.id.
    ============================================================ */
 
 async function provisionSchool({ supabase, slug, business, credentials }) {
   // ---- 1. Create the actual login (Supabase Auth) ----
+  // NOTE: this synchronously fires on_inst_user_created, which
+  // inserts a bare public.inst_profiles row for us before this
+  // call even returns.
   const { data: authData, error: authErr } = await supabase.auth.admin.createUser({
     email: business.email,
     password: credentials.tempPassword,
@@ -73,19 +90,28 @@ async function provisionSchool({ supabase, slug, business, credentials }) {
 
     if (instErr) throw new Error(`Failed to create institution: ${instErr.message}`);
 
-    // ---- 3. Create the profile, linked to both the auth user and the institution ----
-    const { error: profileErr } = await supabase.from("inst_profiles").insert({
-      id: userId, // matches auth.users.id -- this IS the login
-      institution_id: institution.id,
-      display_name: business.ownerName,
-      role: "admin", // tenant owner tier — 'master' is reserved for the developer
-      must_change_password: true,
-      email: business.email,
-      phone: business.phone,
-      is_active: true,
-    });
+    // ---- 3. UPDATE the profile the trigger already created ----
+    // Do NOT insert here -- the on_inst_user_created trigger beat
+    // us to it with a bare (id, role='gate') row.
+    const { data: updatedProfile, error: profileErr } = await supabase
+      .from("inst_profiles")
+      .update({
+        institution_id: institution.id,
+        display_name: business.ownerName,
+        role: "admin", // tenant owner tier -- overriding the trigger's default 'gate'
+        must_change_password: true,
+        email: business.email,
+        phone: business.phone,
+        is_active: true,
+      })
+      .eq("id", userId)
+      .select()
+      .maybeSingle();
 
-    if (profileErr) throw new Error(`Failed to create inst_profiles row: ${profileErr.message}`);
+    if (profileErr) throw new Error(`Failed to update inst_profiles row: ${profileErr.message}`);
+    if (!updatedProfile) {
+      throw new Error("No inst_profiles row found to update for the new auth user (expected on_inst_user_created to have created one).");
+    }
 
     // ---- 4. Make name-based login actually resolve ----
     // inst_login_lookup is a plain table, not auto-derived —
@@ -111,7 +137,8 @@ async function provisionSchool({ supabase, slug, business, credentials }) {
     return { id: institution.id, authUserId: userId };
   } catch (err) {
     // Roll back the auth user so a failed purchase never leaves a
-    // dangling login with no institution/profile behind it.
+    // dangling login. Deleting the auth user also removes the
+    // trigger-created inst_profiles row tied to it.
     await supabase.auth.admin.deleteUser(userId).catch(() => {});
     throw err;
   }
