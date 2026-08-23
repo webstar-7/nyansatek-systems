@@ -94,9 +94,22 @@ exports.handler = async (event) => {
       txn.amount === catalogPlan.price;
 
     if (!isValid) {
+      // Build a specific, diagnosable reason instead of a generic
+      // message — this gets stored on the job and is readable via
+      // provision-status without needing to dig through function logs.
+      const reasons = [];
+      if (verifyRes.status !== 200) reasons.push(`http_status=${verifyRes.status}`);
+      if (verifyJson.status !== true) reasons.push(`paystack_status_false: ${verifyJson.message || "no message"}`);
+      if (!txn) reasons.push("no_transaction_data_returned");
+      if (txn && txn.status !== "success") reasons.push(`txn_status=${txn.status}`);
+      if (txn && txn.currency !== "GHS") reasons.push(`currency=${txn.currency}`);
+      if (txn && txn.amount !== catalogPlan.price) {
+        reasons.push(`amount_mismatch: paystack=${txn.amount} expected=${catalogPlan.price}`);
+      }
+
       await jobsDb
         .from("provisioning_jobs")
-        .update({ state: "failed", error: "payment_verification_failed" })
+        .update({ state: "failed", error: `payment_verification_failed [${reasons.join("; ")}]` })
         .eq("reference", reference);
       return { statusCode: 402, body: JSON.stringify({ ok: false, error: "Payment could not be verified" }) };
     }
