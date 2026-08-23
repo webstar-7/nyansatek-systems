@@ -129,6 +129,7 @@ async function provisionSchool({ supabase, slug, business, credentials }) {
     const { error: classErr } = await supabase.from("school_classes").insert({
       institution_id: institution.id,
       class_name: "Class 1",
+      level: "Basic 1", // required column -- discovered via NOT NULL violation, Aug 2026
       is_active: true,
     });
 
