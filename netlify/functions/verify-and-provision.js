@@ -69,14 +69,26 @@ exports.handler = async (event) => {
       return { statusCode: 200, body: JSON.stringify({ ok: true, alreadyHandled: true }) };
     }
 
-    // Claim this reference immediately so a concurrent call
-    // (e.g. webhook firing at the same moment) doesn't double-provision.
-    await jobsDb.from("provisioning_jobs").insert({
+    // Claim this reference immediately so a concurrent call (e.g. the
+    // Paystack webhook and the browser's own callback both firing for
+    // the same purchase) doesn't double-provision. `reference` has a
+    // UNIQUE constraint, so if another request claimed it a moment ago,
+    // this insert fails — and unlike before, we now actually check for
+    // that and stop here instead of silently continuing on to create a
+    // second account for the same purchase.
+    const { error: claimErr } = await jobsDb.from("provisioning_jobs").insert({
       reference,
       state: "verifying",
       product: order.product,
       payload: order,
     });
+
+    if (claimErr) {
+      // Someone else (webhook or client callback) is already handling
+      // this exact reference. Not an error from the customer's point
+      // of view — just step back and let that other request finish.
+      return { statusCode: 200, body: JSON.stringify({ ok: true, alreadyHandled: true }) };
+    }
 
     // ---- 1. verify the transaction with Paystack directly ----
     const verifyRes = await fetch(
