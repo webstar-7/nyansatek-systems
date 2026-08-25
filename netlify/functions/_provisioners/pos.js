@@ -2,7 +2,13 @@
    POS provisioner — matches the real nyansatek-pos schema.
 
    Confirmed structure (via information_schema, Aug 2026):
-     organizations(id, business_name, contact_email, created_at, is_active)
+     organizations(id, business_name, contact_email, created_at,
+       is_active, plan_key, plan_cycle, max_stores, signup_reference)
+       - plan_key/plan_cycle/max_stores added Aug 2026 so the real
+         POS app can enforce plan limits -- previously the purchased
+         plan only lived in provisioning_jobs.payload, invisible to
+         the tenant record itself. signup_reference ties the row
+         back to its originating Paystack transaction.
      profiles(id, org_id, display_name, role, must_change_password,
                created_at, full_name, login_username, is_active,
                phone, address)
@@ -57,7 +63,12 @@
    row via cascade, since it's tied to auth.users.id.
    ============================================================ */
 
-async function provisionPOS({ supabase, slug, business, credentials }) {
+async function provisionPOS({ supabase, slug, business, credentials, catalogPlan, reference }) {
+  // Plan tiers only carry a store limit in the "multi" tier (3 stores);
+  // both "standard" and "yearly" are the single-store tier at different
+  // billing cycles -- see _catalog.js.
+  const maxStores = business.plan === "multi" ? 3 : 1;
+
   // ---- 1. Create the actual login (Supabase Auth) ----
   // NOTE: this synchronously fires on_auth_user_created, which
   // inserts a bare public.profiles row for us before this call
@@ -80,6 +91,10 @@ async function provisionPOS({ supabase, slug, business, credentials }) {
         business_name: business.businessName,
         contact_email: business.email,
         is_active: true,
+        plan_key: business.plan,
+        plan_cycle: catalogPlan.cycle,
+        max_stores: maxStores,
+        signup_reference: reference,
       })
       .select()
       .single();
