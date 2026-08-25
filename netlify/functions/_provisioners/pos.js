@@ -15,10 +15,20 @@
        - profiles.id is the SAME uuid as the corresponding
          auth.users row — this app uses Supabase Auth for real
          sign-in, not a plaintext/hashed password column.
-     staff_login_lookup — a security-definer VIEW (not a table)
-       mapping login_username -> login_email per org, used at
-       sign-in time to resolve "username" to an actual email
-       Supabase Auth can authenticate against.
+     staff_login_lookup — a security-definer VIEW (not a table),
+       WHERE role='cashier' AND is_active=true. Only resolves
+       CASHIER logins (login_username -> login_email). Admin/owner
+       accounts are role='admin' and are NEVER in this view.
+     login_lookup(business_name, login_email) — a plain BASE TABLE
+       (discovered via information_schema, Aug 2026, after a real
+       test purchase's admin login failed despite a fully valid,
+       confirmed auth user). This is the ADMIN-login counterpart to
+       staff_login_lookup: the real app's login form tries
+       login_lookup first (by business name), then falls back to
+       staff_login_lookup (by staff username). Provisioning MUST
+       insert a row here directly, same as inst_login_lookup on the
+       School side, or the tenant owner has a working auth user with
+       no way to actually log in.
      stores(id, org_id, name, created_at)
 
    IMPORTANT — discovered via pg_trigger (Aug 2026): this project
@@ -103,7 +113,24 @@ async function provisionPOS({ supabase, slug, business, credentials }) {
       throw new Error("No profile row found to update for the new auth user (expected on_auth_user_created to have created one).");
     }
 
-    // ---- 4. Seed the first store so the POS isn't empty on first login ----
+    // ---- 4. Make business-name login actually resolve ----
+    // login_lookup is a plain table, not auto-derived (discovered via
+    // information_schema, Aug 2026, after a real test purchase failed
+    // to log in despite a fully correct, confirmed auth user + profile
+    // row). It's separate from staff_login_lookup (which is a VIEW,
+    // cashier-only, WHERE role='cashier'). The tenant owner/admin
+    // resolves through THIS table instead -- without this row, the
+    // admin has a working auth user with no way to log in by business
+    // name, same failure mode inst_login_lookup guards against on the
+    // School side.
+    const { error: lookupErr } = await supabase.from("login_lookup").insert({
+      business_name: business.businessName,
+      login_email: business.email,
+    });
+
+    if (lookupErr) throw new Error(`Failed to create login_lookup row: ${lookupErr.message}`);
+
+    // ---- 5. Seed the first store so the POS isn't empty on first login ----
     const { error: storeErr } = await supabase.from("stores").insert({
       org_id: org.id,
       name: "Main Store",
