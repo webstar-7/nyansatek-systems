@@ -143,14 +143,19 @@ exports.handler = async (event) => {
     await jobsDb.from("provisioning_jobs").update({ state: "notifying" }).eq("reference", reference);
 
     // The two products authenticate differently on the real login
-    // screens: POS resolves profiles.login_username (a friendly
-    // slug) via the staff_login_lookup view, so the slug IS the
-    // real credential there. School's login screen takes an email
-    // directly (teachers/parents log in by email too, so the whole
-    // product is email-identified) -- sending the slug as "User:"
-    // there produces a credential the login page structurally can't
-    // accept (it HTML5-validates as an email field).
-    const loginIdentifier = order.product === "school" ? order.email : slug;
+    // screens, confirmed via a live test purchase + SQL inspection
+    // (Aug 2026):
+    //   - POS: the admin/owner (the person who just paid) logs in with
+    //     the EXACT business name via the login_lookup table. The
+    //     generated slug only resolves through staff_login_lookup,
+    //     which is filtered to role='cashier' -- it does NOT include
+    //     admins. Sending the slug here produces a credential the
+    //     paying customer's own account can't use.
+    //   - School: the login screen takes an email directly (teachers/
+    //     parents log in by email too, so the whole product is
+    //     email-identified) -- the slug isn't an email at all, and
+    //     the field HTML5-validates as one.
+    const loginIdentifier = order.product === "school" ? order.email : order.businessName;
 
     const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
     await Promise.allSettled([
