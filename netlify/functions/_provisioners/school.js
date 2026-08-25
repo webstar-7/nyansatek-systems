@@ -4,8 +4,14 @@
 
    Confirmed structure (via information_schema, Aug 2026):
      institutions(id, name, type, contact_phone, contact_email,
-                   address, is_active, created_at)
+                   address, is_active, created_at, plan_key,
+                   plan_cycle, max_students, signup_reference)
        - type is constrained to: 'school' | 'office' | 'other'
+       - plan_key/plan_cycle/max_students added Aug 2026 so the real
+         School app can enforce plan limits -- previously the
+         purchased plan only lived in provisioning_jobs.payload,
+         invisible to the tenant record itself. signup_reference
+         ties the row back to its originating Paystack transaction.
      inst_profiles(id, institution_id, display_name, role,
                      must_change_password, created_at, photo_url,
                      gender, date_of_birth, is_active, email,
@@ -58,7 +64,12 @@
    inst_profiles row via cascade, since it's tied to auth.users.id.
    ============================================================ */
 
-async function provisionSchool({ supabase, slug, business, credentials }) {
+async function provisionSchool({ supabase, slug, business, credentials, catalogPlan, reference }) {
+  // Plan tiers only carry a student-count limit in the "multi" tier
+  // (800 students); both "standard" and "yearly" are the 300-student
+  // tier at different billing cycles -- see _catalog.js.
+  const maxStudents = business.plan === "multi" ? 800 : 300;
+
   // ---- 1. Create the actual login (Supabase Auth) ----
   // NOTE: this synchronously fires on_inst_user_created, which
   // inserts a bare public.inst_profiles row for us before this
@@ -84,6 +95,10 @@ async function provisionSchool({ supabase, slug, business, credentials }) {
         contact_email: business.email,
         address: business.location,
         is_active: true,
+        plan_key: business.plan,
+        plan_cycle: catalogPlan.cycle,
+        max_students: maxStudents,
+        signup_reference: reference,
       })
       .select()
       .single();
