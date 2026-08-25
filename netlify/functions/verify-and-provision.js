@@ -137,6 +137,8 @@ exports.handler = async (event) => {
       slug,
       business: { ...order, plan: order.plan },
       credentials: { tempPassword },
+      catalogPlan, // { label, price, cycle } for the purchased plan -- needed to derive enforceable limits
+      reference, // ties the tenant row back to its originating payment -- also useful for the test-data cleanup pass
     });
 
     // ---- 3. notify the customer ----
