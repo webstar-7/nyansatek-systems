@@ -142,7 +142,17 @@ exports.handler = async (event) => {
     // ---- 3. notify the customer ----
     await jobsDb.from("provisioning_jobs").update({ state: "notifying" }).eq("reference", reference);
 
-    const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${slug} | Pass: ${tempPassword}`;
+    // The two products authenticate differently on the real login
+    // screens: POS resolves profiles.login_username (a friendly
+    // slug) via the staff_login_lookup view, so the slug IS the
+    // real credential there. School's login screen takes an email
+    // directly (teachers/parents log in by email too, so the whole
+    // product is email-identified) -- sending the slug as "User:"
+    // there produces a credential the login page structurally can't
+    // accept (it HTML5-validates as an email field).
+    const loginIdentifier = order.product === "school" ? order.email : slug;
+
+    const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
     await Promise.allSettled([
       sendSMS(order.phone, smsText),
       sendEmail({
@@ -152,7 +162,7 @@ exports.handler = async (event) => {
           ownerName: order.ownerName,
           productName: catalogProduct.name,
           loginUrl: catalogProduct.loginUrl,
-          username: slug,
+          username: loginIdentifier,
           tempPassword,
         }),
       }),
@@ -162,7 +172,7 @@ exports.handler = async (event) => {
     const result = {
       productName: catalogProduct.name,
       loginUrl: catalogProduct.loginUrl,
-      username: slug,
+      username: loginIdentifier,
       tempPassword,
       tenantId: tenant.id,
     };
