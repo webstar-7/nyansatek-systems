@@ -476,6 +476,96 @@ footer.site {
 }
 .pay-total .amt { font-family: var(--font-mono); font-size: 26px; color: var(--gold); }
 
+/* ---------- content pages (About / Terms / Privacy) ---------- */
+.content-hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--line);
+}
+.content-hero h1 { font-size: clamp(30px, 4vw, 42px); margin-top: 14px; }
+.content-hero .updated {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 12px;
+}
+.prose {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 28px 100px;
+}
+.prose h2 {
+  font-size: 22px;
+  margin-top: 44px;
+  margin-bottom: 14px;
+  padding-top: 4px;
+}
+.prose h2:first-child { margin-top: 0; }
+.prose p {
+  color: var(--text-dim);
+  font-size: 15.5px;
+  margin-bottom: 14px;
+}
+.prose ul, .prose ol {
+  color: var(--text-dim);
+  font-size: 15.5px;
+  padding-left: 22px;
+  margin-bottom: 14px;
+}
+.prose li { margin-bottom: 8px; }
+.prose strong { color: var(--text); }
+.prose a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- FAQ accordion ---------- */
+.faq-list { max-width: 760px; margin: 0 auto; }
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+.faq-item summary {
+  cursor: pointer;
+  padding: 18px 22px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15.5px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  color: var(--gold);
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item .faq-a {
+  padding: 0 22px 20px;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+/* ---------- feedback form ---------- */
+.feedback-wrap { max-width: 620px; margin: 0 auto; padding: 56px 28px 100px; }
+.feedback-wrap .lede { color: var(--text-dim); font-size: 16px; margin-bottom: 32px; }
+.status-msg.on { display: block; }
+.status-success {
+  background: rgba(62, 144, 136, 0.1);
+  border: 1px solid var(--teal);
+  color: var(--text);
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14.5px;
+  margin-bottom: 20px;
+}
+
 .status-msg {
   display: none;
   padding: 14px 16px;
