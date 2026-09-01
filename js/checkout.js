@@ -10,7 +10,7 @@
    window.PAYSTACK_PUBLIC_KEY set below to your real key.
    ============================================================ */
 
-const PAYSTACK_PUBLIC_KEY = "pk_live_f06348c9521967084c78419c709c740c7d3b51d2";
+const PAYSTACK_PUBLIC_KEY = "pk_test_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY";
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product") || "pos";
@@ -65,6 +65,8 @@ els.form.addEventListener("submit", function (e) {
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
   const location = document.getElementById("location").value.trim();
+  const salesCode = document.getElementById("salesCode").value.trim();
+  const momoProvider = document.getElementById("momoProvider").value;
 
   if (!businessName || !ownerName || !phone || !email || !location) {
     showError("Please fill in every field before continuing to payment.");
@@ -105,7 +107,7 @@ els.form.addEventListener("submit", function (e) {
         reference: response.reference,
         product: productId,
         plan: planId,
-        businessName, ownerName, phone, email, location,
+        businessName, ownerName, phone, email, location, salesCode, momoProvider,
       };
       sessionStorage.setItem("nyansatek_order", JSON.stringify(payload));
       window.location.href = "success.html?ref=" + encodeURIComponent(response.reference);
