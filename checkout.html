@@ -74,6 +74,23 @@
       <input type="text" id="location" required placeholder="e.g. Kumasi">
     </div>
 
+    <div class="field">
+      <label for="momoProvider">If paying by Mobile Money — which network?</label>
+      <select id="momoProvider">
+        <option value="">Not paying by Mobile Money / not sure yet</option>
+        <option value="mtn">MTN Mobile Money</option>
+        <option value="vod">Telecel Cash (Vodafone)</option>
+        <option value="atl">AirtelTigo Money</option>
+      </select>
+      <div class="hint">Needed so we can request your monthly renewal automatically — you'll still confirm each charge with your PIN.</div>
+    </div>
+
+    <div class="field">
+      <label for="salesCode">Sales agent code (optional)</label>
+      <input type="text" id="salesCode" placeholder="e.g. JOHN10">
+      <div class="hint">If a NYANSATEK sales rep referred you, enter their code here.</div>
+    </div>
+
     <div class="pay-total">
       <span style="color:var(--text-dim); font-size:15px;">Total due today</span>
       <span class="amt" id="total-amount">GH₵0</span>
@@ -93,14 +110,49 @@
 </div>
 
 <footer class="site">
-  <div class="wrap footer-bottom">
-    <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
-    <a href="index.html" style="color:var(--gold);">← Back to all systems</a>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 2 L30 9.5 L30 24.5 L17 32 L4 24.5 L4 9.5 Z" stroke="#E3A54C" stroke-width="1.4"/>
+          <path d="M17 2 V17 M17 17 L30 9.5 M17 17 L4 9.5 M17 17 V32" stroke="#3E9088" stroke-width="1.2"/>
+          <circle cx="17" cy="17" r="2.6" fill="#E3A54C"/>
+        </svg>
+        <span style="color:var(--text)">NYANSATEK<small>Systems</small></span>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="product-pos.html">POS</a>
+          <a href="product-school.html">School</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="about.html">About</a>
+          <a href="faq.html">FAQ</a>
+          <a href="feedback.html">Customer Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="tel:0536340578">0536 340 578</a>
+          <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
+      <span>Obuasi, Ghana</span>
+    </div>
   </div>
 </footer>
 
+
 <script src="https://js.paystack.co/v2/inline.js"></script>
-<script src="js/products.js"></script>
 <script src="js/checkout.js"></script>
 </body>
 </html>
