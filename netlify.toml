@@ -5,6 +5,12 @@
 [functions]
   node_bundler = "esbuild"
 
+# Runs charge-momo-renewals.js once a day at 06:00 UTC (~06:00 in Ghana,
+# same timezone, no offset). Card renewals need no such job -- Paystack's
+# own Subscriptions engine charges those silently on its own schedule.
+[functions."charge-momo-renewals"]
+  schedule = "0 6 * * *"
+
 [[headers]]
   for = "/*"
   [headers.values]
