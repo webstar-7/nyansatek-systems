@@ -24,6 +24,7 @@ const { CATALOG } = require("./_catalog");
 const { getSupabaseFor, getJobsClient } = require("./_supabase");
 const { generateBusinessSlug, generateTempPassword } = require("./_lib/credentials");
 const { sendSMS, sendEmail, welcomeEmailHTML } = require("./_lib/notify");
+const { addCycle, createCardSubscription, generateCommissions } = require("./_lib/billing");
 const { provisionPOS } = require("./_provisioners/pos");
 const { provisionSchool } = require("./_provisioners/school");
 
@@ -141,7 +142,82 @@ exports.handler = async (event) => {
       reference, // ties the tenant row back to its originating payment -- also useful for the test-data cleanup pass
     });
 
-    // ---- 3. notify the customer ----
+    // ---- 3. billing setup: card subscription OR stored MoMo details ----
+    // Paystack's Subscriptions API only supports Card (+ Nigerian Direct
+    // Debit) -- Mobile Money has no persistent "subscription" concept on
+    // their side, confirmed via their own docs (Aug 2026). So: card gets
+    // a real silent-renewing subscription; MoMo just gets its phone +
+    // provider stored, and charge-momo-renewals.js (a daily scheduled
+    // function) initiates a fresh charge each cycle using those same
+    // details -- the customer still approves via PIN each time, which is
+    // a Ghana-wide MoMo constraint, not something we can bypass.
+    const TENANT_TABLES = { pos: "organizations", school: "institutions" };
+    const tenantTable = TENANT_TABLES[order.product];
+    const channel = txn.channel; // 'card' | 'mobile_money' (as returned by Paystack's verify endpoint)
+    const paidThroughDate = addCycle(new Date(), catalogPlan.cycle);
+
+    const billingUpdate = {
+      paid_through_date: paidThroughDate,
+      subscription_status: "active",
+    };
+
+    if (channel === "card" && txn.authorization && txn.authorization.authorization_code) {
+      billingUpdate.payment_channel = "card";
+      billingUpdate.paystack_authorization_code = txn.authorization.authorization_code;
+      billingUpdate.paystack_subscription_code = await createCardSubscription({
+        email: order.email,
+        planCode: catalogPlan.paystackPlanCode,
+        authorizationCode: txn.authorization.authorization_code,
+      });
+    } else {
+      // Treat anything that isn't a confirmed card authorization as MoMo --
+      // the only other channel Paystack Ghana actually supports at checkout.
+      billingUpdate.payment_channel = "momo";
+      billingUpdate.momo_phone = order.phone;
+      billingUpdate.momo_provider = order.momoProvider || null;
+    }
+
+    // ---- 4. sales agent attribution (optional, never blocks a sale) ----
+    // If a valid code was entered, this link is PERMANENT on the tenant
+    // row -- every future renewal re-attributes automatically, without
+    // the code ever being re-entered.
+    let matchedAgentId = null;
+    if (order.salesCode && String(order.salesCode).trim()) {
+      try {
+        const code = String(order.salesCode).trim();
+        const { data: agent } = await jobsDb
+          .from("sales_agents")
+          .select("*")
+          .ilike("code", code)
+          .eq("is_active", true)
+          .maybeSingle();
+        if (agent) matchedAgentId = agent.id;
+      } catch (lookupErr) {
+        console.error("Sales code lookup failed (non-fatal):", lookupErr);
+      }
+    }
+    if (matchedAgentId) billingUpdate.sales_agent_id = matchedAgentId;
+
+    await tenantDb.from(tenantTable).update(billingUpdate).eq("id", tenant.id);
+
+    if (matchedAgentId) {
+      try {
+        await generateCommissions(jobsDb, {
+          tenantProduct: order.product,
+          tenantId: tenant.id,
+          agentId: matchedAgentId,
+          reference,
+          plan: order.plan,
+          amountPaidGHS: catalogPlan.price / 100,
+          eventType: "initial_sale",
+        });
+      } catch (commissionErr) {
+        // Never let a commission-bookkeeping problem fail the customer's purchase.
+        console.error("Commission generation failed (non-fatal):", commissionErr);
+      }
+    }
+
+    // ---- 5. notify the customer ----
     await jobsDb.from("provisioning_jobs").update({ state: "notifying" }).eq("reference", reference);
 
     // The two products authenticate differently on the real login
@@ -175,7 +251,7 @@ exports.handler = async (event) => {
       }),
     ]);
 
-    // ---- 4. mark complete ----
+    // ---- 6. mark complete ----
     const result = {
       productName: catalogProduct.name,
       loginUrl: catalogProduct.loginUrl,
