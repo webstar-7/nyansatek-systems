@@ -65,10 +65,10 @@
    ============================================================ */
 
 async function provisionSchool({ supabase, slug, business, credentials, catalogPlan, reference }) {
-  // Plan tiers only carry a student-count limit in the "multi" tier
-  // (800 students); both "standard" and "yearly" are the 300-student
-  // tier at different billing cycles -- see _catalog.js.
-  const maxStudents = business.plan === "multi" ? 800 : 300;
+  // With only 2 plans left (monthly/yearly, see _catalog.js), the higher
+  // student cap is now a yearly-commitment benefit rather than a
+  // separate paid tier: monthly = 300 students, yearly = 800 students.
+  const maxStudents = business.plan === "yearly" ? 800 : 300;
 
   // ---- 1. Create the actual login (Supabase Auth) ----
   // NOTE: this synchronously fires on_inst_user_created, which
