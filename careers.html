@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the Team — NYANSATEK Systems</title>
+<meta name="description" content="Apply to join NYANSATEK Systems as a Sales Representative, Sales Manager, or Accountant/HR — instant approval, start earning right away.">
+<meta name="theme-color" content="#0D1320">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.role-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.role-tab { flex: 1; min-width: 140px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg-card); cursor: pointer; text-align: center; font-size: 13.5px; font-weight: 600; color: var(--text-dim); transition: all 0.15s ease; }
+.role-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(227,165,76,0.08); }
+.conditional-field { display: none; }
+.conditional-field.show { display: block; }
+.success-card { max-width: 480px; margin: 0 auto; text-align: center; padding: 40px 28px; }
+.success-card .code-display { font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--gold); background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin: 20px 0; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 2 L30 9.5 L30 24.5 L17 32 L4 24.5 L4 9.5 Z" stroke="#E3A54C" stroke-width="1.4"/>
+        <path d="M17 2 V17 M17 17 L30 9.5 M17 17 L4 9.5 M17 17 V32" stroke="#3E9088" stroke-width="1.2"/>
+        <circle cx="17" cy="17" r="2.6" fill="#E3A54C"/>
+      </svg>
+      <span>NYANSATEK<small>Systems</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#about">About</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a href="index.html#products" class="btn btn-gold">Get started</a>
+  </div>
+</header>
+
+<div class="content-hero">
+  <div class="wrap">
+    <span class="eyebrow">Join the team</span>
+    <h1>Sell software you can actually explain in one sentence.</h1>
+    <p style="color:var(--text-dim);margin-top:12px;max-width:60ch;">Apply below — approval is instant, no interview to wait on. Sales Representatives earn 10% on every sale, forever, for as long as that customer keeps paying.</p>
+  </div>
+</div>
+
+<div class="wrap" style="max-width:560px; padding: 48px 28px 100px;">
+
+  <div id="apply-form-wrap">
+    <div class="role-tabs">
+      <div class="role-tab active" data-role="sales_rep">Sales Rep</div>
+      <div class="role-tab" data-role="sales_manager">Sales Manager</div>
+      <div class="role-tab" data-role="accountant_hr">Accountant / HR</div>
+    </div>
+
+    <div id="apply-error" class="status-msg error"></div>
+
+    <form id="apply-form">
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="region">Region</label>
+        <select id="region" required>
+          <option value="">-- Select your region --</option>
+          <option>Ahafo</option><option>Ashanti</option><option>Bono</option>
+          <option>Bono East</option><option>Central</option><option>Eastern</option>
+          <option>Greater Accra</option><option>North East</option><option>Northern</option>
+          <option>Oti</option><option>Savannah</option><option>Upper East</option>
+          <option>Upper West</option><option>Volta</option><option>Western</option>
+          <option>Western North</option>
+        </select>
+      </div>
+
+      <div class="field conditional-field" id="field-managerCode">
+        <label for="managerCode">Recruiting manager's code</label>
+        <input type="text" id="managerCode" placeholder="e.g. NAS0002">
+        <div class="hint">Given to you by the Sales Manager who invited you.</div>
+      </div>
+
+      <div class="field conditional-field" id="field-inviteCode">
+        <label for="inviteCode">Invite code</label>
+        <input type="text" id="inviteCode" placeholder="Given to you personally by NYANSATEK">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" minlength="8" required>
+        </div>
+        <div class="field">
+          <label for="password2">Confirm password</label>
+          <input type="password" id="password2" minlength="8" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-block" id="apply-submit">Submit Application</button>
+    </form>
+  </div>
+
+  <div id="success-wrap" style="display:none;">
+    <div class="success-card">
+      <span class="eyebrow">You're in</span>
+      <h2 style="margin-top:10px;">Application approved.</h2>
+      <p style="color:var(--text-dim);margin-top:10px;">Your unique code is ready. Sales Reps: this is what customers enter at checkout to credit you. Sales Managers: share this as your recruiting code with people you bring on.</p>
+      <div class="code-display" id="success-code">—</div>
+      <p style="color:var(--text-faint);font-size:13px;">Sign in with the email and password you just set. (Portal coming soon.)</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 2 L30 9.5 L30 24.5 L17 32 L4 24.5 L4 9.5 Z" stroke="#E3A54C" stroke-width="1.4"/>
+          <path d="M17 2 V17 M17 17 L30 9.5 M17 17 L4 9.5 M17 17 V32" stroke="#3E9088" stroke-width="1.2"/>
+          <circle cx="17" cy="17" r="2.6" fill="#E3A54C"/>
+        </svg>
+        <span style="color:var(--text)">NYANSATEK<small>Systems</small></span>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="product-pos.html">POS</a>
+          <a href="product-school.html">School</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="index.html#about">About</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="index.html#feedback">Customer Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="index.html#terms">Terms of Service</a>
+          <a href="index.html#privacy">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="tel:0536340578">0536 340 578</a>
+          <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
+      <span>Obuasi, Ghana</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+let selectedRole = 'sales_rep';
+
+document.querySelectorAll('.role-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    selectedRole = tab.dataset.role;
+    updateConditionalFields();
+  });
+});
+
+function updateConditionalFields() {
+  const mgrField = document.getElementById('field-managerCode');
+  const inviteField = document.getElementById('field-inviteCode');
+  mgrField.classList.toggle('show', selectedRole === 'sales_rep');
+  inviteField.classList.toggle('show', selectedRole === 'sales_manager' || selectedRole === 'accountant_hr');
+  document.getElementById('managerCode').required = selectedRole === 'sales_rep';
+  document.getElementById('inviteCode').required = selectedRole !== 'sales_rep';
+}
+
+// If someone arrives via a manager's shared link (?ref=CODE), pre-fill
+// and lock the manager code field, and default to the Sales Rep tab.
+const params = new URLSearchParams(window.location.search);
+const refCode = params.get('ref');
+if (refCode) {
+  document.getElementById('managerCode').value = refCode;
+  document.getElementById('managerCode').readOnly = true;
+}
+updateConditionalFields();
+
+document.getElementById('apply-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const errEl = document.getElementById('apply-error');
+  errEl.classList.remove('show');
+
+  const password = document.getElementById('password').value;
+  const password2 = document.getElementById('password2').value;
+  if (password !== password2) {
+    errEl.innerText = 'Passwords do not match.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  const submitBtn = document.getElementById('apply-submit');
+  submitBtn.disabled = true;
+  submitBtn.innerText = 'Submitting...';
+
+  const payload = {
+    role: selectedRole,
+    fullName: document.getElementById('fullName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    region: document.getElementById('region').value,
+    password,
+  };
+  if (selectedRole === 'sales_rep') {
+    payload.managerCode = document.getElementById('managerCode').value.trim();
+  } else {
+    payload.inviteCode = document.getElementById('inviteCode').value.trim();
+  }
+
+  try {
+    const res = await fetch('/.netlify/functions/register-agent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      errEl.innerText = data.error || 'Something went wrong. Please try again.';
+      errEl.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'Submit Application';
+      return;
+    }
+    document.getElementById('apply-form-wrap').style.display = 'none';
+    document.getElementById('success-wrap').style.display = 'block';
+    document.getElementById('success-code').innerText = data.code;
+  } catch (err) {
+    errEl.innerText = 'Network error. Please try again.';
+    errEl.classList.add('show');
+    submitBtn.disabled = false;
+    submitBtn.innerText = 'Submit Application';
+  }
+});
+</script>
+
+</body>
+</html>
