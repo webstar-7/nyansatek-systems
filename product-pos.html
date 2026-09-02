@@ -23,8 +23,10 @@
     </a>
     <nav class="nav-links">
       <a href="index.html#products">Products</a>
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#why">Why us</a>
+      <a href="index.html#about">About</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#feedback">Reviews</a>
       <a href="https://nyansatek.shop" target="_blank" rel="noopener">Existing customer? Sign in</a>
     </nav>
     <a href="checkout.html?product=pos&plan=standard" class="btn btn-gold">Buy now</a>
@@ -78,19 +80,18 @@
       <h3 style="font-size:18px; margin-bottom:18px;">Choose a plan</h3>
 
       <label class="plan-option selected">
-        <span class="plan-label"><input type="radio" name="plan" checked> Single store</span>
+        <span class="plan-label"><input type="radio" name="plan" value="standard" checked> Monthly</span>
         <span class="plan-price">GH₵120/mo</span>
       </label>
       <label class="plan-option">
-        <span class="plan-label"><input type="radio" name="plan"> Up to 3 stores</span>
-        <span class="plan-price">GH₵260/mo</span>
-      </label>
-      <label class="plan-option">
-        <span class="plan-label"><input type="radio" name="plan"> Single store — yearly</span>
+        <span class="plan-label"><input type="radio" name="plan" value="yearly"> Yearly</span>
         <span class="plan-price">GH₵1,200/yr</span>
       </label>
+      <p style="font-size:12.5px; color:var(--text-dim); margin:10px 0 0;">
+        Multiple stores, cashiers, and full inventory tracking are included on every plan.
+      </p>
 
-      <a href="checkout.html?product=pos&plan=standard" class="btn btn-gold btn-block" style="margin-top:8px;">Continue to checkout</a>
+      <a href="checkout.html?product=pos&plan=standard" class="btn btn-gold btn-block" style="margin-top:14px;" id="pos-checkout-link">Continue to checkout</a>
       <p style="font-size:12.5px; color:var(--text-faint); margin-top:14px;">
         No setup fee. Cancel anytime. Login details sent by SMS and email right after payment.
       </p>
@@ -99,11 +100,57 @@
 </section>
 
 <footer class="site">
-  <div class="wrap footer-bottom">
-    <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
-    <a href="index.html" style="color:var(--gold);">← Back to all systems</a>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 2 L30 9.5 L30 24.5 L17 32 L4 24.5 L4 9.5 Z" stroke="#E3A54C" stroke-width="1.4"/>
+          <path d="M17 2 V17 M17 17 L30 9.5 M17 17 L4 9.5 M17 17 V32" stroke="#3E9088" stroke-width="1.2"/>
+          <circle cx="17" cy="17" r="2.6" fill="#E3A54C"/>
+        </svg>
+        <span style="color:var(--text)">NYANSATEK<small>Systems</small></span>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="product-pos.html">POS</a>
+          <a href="product-school.html">School</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="index.html#about">About</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="index.html#feedback">Customer Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="index.html#terms">Terms of Service</a>
+          <a href="index.html#privacy">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="tel:0536340578">0536 340 578</a>
+          <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
+      <span>Obuasi, Ghana</span>
+    </div>
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('.plan-option input[name="plan"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      document.querySelectorAll('.plan-option').forEach(function (opt) { opt.classList.remove('selected'); });
+      this.closest('.plan-option').classList.add('selected');
+      document.getElementById('pos-checkout-link').href = 'checkout.html?product=pos&plan=' + this.value;
+    });
+  });
+</script>
 
 </body>
 </html>
