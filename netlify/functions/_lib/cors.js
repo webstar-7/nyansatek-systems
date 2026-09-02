@@ -7,7 +7,7 @@
 
 const ALLOWED_ORIGINS = [
   "https://nyansatek.shop",
-  "https://nyansatek-attendance.netlify.app", // TODO: swap once nyansatek.school is live
+  "https://nyansatek.school",
   "https://nyansatek.systems",
 ];
 
