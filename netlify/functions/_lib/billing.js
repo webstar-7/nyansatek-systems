@@ -116,4 +116,32 @@ async function generateCommissions(jobsDb, { tenantProduct, tenantId, agentId, r
   }
 }
 
-module.exports = { addCycle, createCardSubscription, chargeMomo, generateCommissions };
+// ---- Card: fetch a subscription's details -- needed to get the email_token, ----
+// ---- which Paystack requires (alongside the subscription_code) to disable one ----
+async function fetchSubscription(subscriptionCode) {
+  const res = await fetch(`${PAYSTACK_BASE}/subscription/${encodeURIComponent(subscriptionCode)}`, {
+    headers: paystackHeaders(),
+  });
+  const json = await res.json();
+  if (!res.ok || !json.status) return null;
+  return json.data;
+}
+
+// ---- Card: cancel a subscription (used when upgrading -- the old monthly ----
+// ---- subscription must be retired or Paystack will keep charging it too) ----
+async function cancelCardSubscription(subscriptionCode) {
+  const sub = await fetchSubscription(subscriptionCode);
+  if (!sub || !sub.email_token) {
+    console.error("Could not fetch subscription/email_token -- cannot disable:", subscriptionCode);
+    return false;
+  }
+  const res = await fetch(`${PAYSTACK_BASE}/subscription/disable`, {
+    method: "POST",
+    headers: paystackHeaders(),
+    body: JSON.stringify({ code: subscriptionCode, token: sub.email_token }),
+  });
+  const json = await res.json();
+  return res.ok && json.status;
+}
+
+module.exports = { addCycle, createCardSubscription, chargeMomo, generateCommissions, fetchSubscription, cancelCardSubscription };
