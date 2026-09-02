@@ -34,8 +34,7 @@ const CATALOG = {
   },
   school: {
     name: "NYANSATEK School",
-    // TODO: swap to https://nyansatek.school once that domain is live
-    loginUrl: "https://nyansatek-attendance.netlify.app",
+    loginUrl: "https://nyansatek.school",
     plans: {
       standard: { label: "Monthly — up to 300 students", price: 15000, cycle: "monthly", paystackPlanCode: "PLN_pido6g7veebfcx7" },
       yearly:   { label: "Yearly — up to 800 students", price: 150000, cycle: "yearly", paystackPlanCode: "PLN_7t3qirj8td8nfew" },
