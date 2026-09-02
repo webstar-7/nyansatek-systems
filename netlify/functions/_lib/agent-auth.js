@@ -11,7 +11,7 @@
    bypasses RLS) do the actual query once we know who's asking.
    ============================================================ */
 
-const { getJobsClient } = require("./_supabase");
+const { getJobsClient } = require("../_supabase");
 
 async function getAuthenticatedAgent(event) {
   const authHeader = event.headers.authorization || event.headers.Authorization;
