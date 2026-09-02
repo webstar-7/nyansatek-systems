@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Portal — NYANSATEK Systems</title>
+<meta name="theme-color" content="#0D1320">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+body { background: var(--bg); }
+.portal-wrap { max-width: 980px; margin: 0 auto; padding: 40px 20px 100px; }
+.login-wrap { max-width: 400px; margin: 80px auto; }
+.portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+.portal-header h1 { font-size: 22px; }
+.code-chip { font-family: var(--font-mono); font-weight: 700; color: var(--gold); background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; display: inline-block; }
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.stat-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px; }
+.stat-card .label { font-size: 12px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-card .value { font-size: 24px; font-weight: 700; color: var(--text); margin-top: 4px; }
+table.dash-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+table.dash-table th { text-align: left; padding: 10px 12px; font-size: 12px; color: var(--text-faint); border-bottom: 1px solid var(--line); text-transform: uppercase; letter-spacing: 0.04em; }
+table.dash-table td { padding: 10px 12px; font-size: 13.5px; border-bottom: 1px solid var(--line); color: var(--text-dim); }
+table.dash-table tr:last-child td { border-bottom: none; }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+.tag.unpaid { background: rgba(217,108,95,0.15); color: #F0A99C; }
+.tag.paid { background: rgba(62,144,136,0.15); color: var(--teal); }
+.tag.active { background: rgba(62,144,136,0.15); color: var(--teal); }
+.tag.inactive { background: rgba(217,108,95,0.15); color: #F0A99C; }
+.section-title { font-size: 16px; font-weight: 600; margin: 32px 0 12px; }
+.section-title:first-of-type { margin-top: 0; }
+.mini-btn { font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg-card); color: var(--text-dim); cursor: pointer; }
+.mini-btn:hover { border-color: var(--gold); color: var(--gold); }
+.copy-link { display: flex; gap: 8px; align-items: center; background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 24px; }
+.copy-link input { flex: 1; background: none; border: none; color: var(--text-dim); font-family: var(--font-mono); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="login-wrap">
+  <div class="card" style="background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:32px;">
+    <h1 style="font-size:20px;margin-bottom:4px;">Team Portal</h1>
+    <p style="color:var(--text-dim);font-size:13.5px;margin-bottom:20px;">Sign in with the email and password from your application.</p>
+    <div id="login-error" class="status-msg error"></div>
+    <form id="login-form">
+      <div class="field"><label for="login-email">Email</label><input type="email" id="login-email" required></div>
+      <div class="field"><label for="login-password">Password</label><input type="password" id="login-password" required></div>
+      <button type="submit" class="btn btn-gold btn-block" id="login-submit">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<div class="portal-wrap" id="portal-wrap" style="display:none;">
+  <div class="portal-header">
+    <div>
+      <h1 id="welcome-name">—</h1>
+      <span class="code-chip" id="welcome-code">—</span>
+    </div>
+    <button class="btn" style="background:var(--bg-card);border:1px solid var(--line);color:var(--text-dim);" onclick="logout()">Log Out</button>
+  </div>
+  <div id="dash-content"><div class="es">Loading...</div></div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://kqwqbohoeltlbwcopeug.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_T6oCd3aRO0OPheQXEkmvRA_nvIhEPcv";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const E = s => !s ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const GH = n => 'GH\u20B5' + (n || 0).toFixed(2);
+let accessToken = null;
+let dashData = null;
+
+async function callDash(endpoint, opts = {}) {
+  const res = await fetch('/.netlify/functions/' + endpoint, {
+    method: opts.method || 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  return { ok: res.ok, data: await res.json() };
+}
+
+document.getElementById('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+  const btn = document.getElementById('login-submit');
+  btn.disabled = true; btn.innerText = 'Signing in...';
+
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    errEl.innerText = 'Email or password is incorrect.';
+    errEl.classList.add('show');
+    btn.disabled = false; btn.innerText = 'Sign In';
+    return;
+  }
+  accessToken = data.session.access_token;
+  await loadDashboard();
+});
+
+async function logout() {
+  await sb.auth.signOut();
+  accessToken = null;
+  document.getElementById('portal-wrap').style.display = 'none';
+  document.getElementById('login-wrap').style.display = 'block';
+}
+
+async function loadDashboard() {
+  const { ok, data } = await callDash('agent-dashboard');
+  if (!ok || !data.ok) {
+    document.getElementById('login-error').innerText = data.error || 'Could not load your dashboard.';
+    document.getElementById('login-error').classList.add('show');
+    return;
+  }
+  dashData = data;
+  document.getElementById('login-wrap').style.display = 'none';
+  document.getElementById('portal-wrap').style.display = 'block';
+  document.getElementById('welcome-name').innerText = data.agent.full_name;
+  document.getElementById('welcome-code').innerText = data.agent.code;
+
+  if (data.agent.role === 'sales_rep') renderRepDashboard(data);
+  else if (data.agent.role === 'sales_manager') renderManagerDashboard(data);
+  else renderFinanceDashboard(data); // accountant_hr and master share the base view
+}
+
+function renderRepDashboard(data) {
+  const c = document.getElementById('dash-content');
+  c.innerHTML = `
+    <div class="stat-cards">
+      <div class="stat-card"><div class="label">Total earned</div><div class="value">${GH(data.total)}</div></div>
+      <div class="stat-card"><div class="label">Unpaid</div><div class="value">${GH(data.unpaid)}</div></div>
+      <div class="stat-card"><div class="label">Sales attributed</div><div class="value">${(data.commissions||[]).length}</div></div>
+    </div>
+    <div class="section-title">Your commission history</div>
+    ${commissionTable(data.commissions, false)}
+  `;
+}
+
+function renderManagerDashboard(data) {
+  const c = document.getElementById('dash-content');
+  const link = window.location.origin + '/careers.html?ref=' + encodeURIComponent(data.agent.code);
+  c.innerHTML = `
+    <div class="copy-link">
+      <span style="font-size:12px;color:var(--text-faint);">Recruiting link:</span>
+      <input type="text" readonly value="${E(link)}" id="recruit-link">
+      <button class="mini-btn" onclick="copyRecruitLink()">Copy</button>
+    </div>
+    <div class="stat-cards">
+      <div class="stat-card"><div class="label">Your override earnings</div><div class="value">${GH(data.ownTotal)}</div></div>
+      <div class="stat-card"><div class="label">Team size</div><div class="value">${(data.team||[]).length}</div></div>
+      <div class="stat-card"><div class="label">Team sales (all-time)</div><div class="value">${GH((data.team||[]).reduce((s,r)=>s+r.totalSales,0))}</div></div>
+    </div>
+    <div class="section-title">Your team</div>
+    <table class="dash-table">
+      <thead><tr><th>Name</th><th>Code</th><th>Sales</th><th>Their earnings</th><th>Status</th></tr></thead>
+      <tbody>${(data.team||[]).length ? data.team.map(r => `
+        <tr>
+          <td>${E(r.full_name)}</td>
+          <td style="font-family:var(--font-mono);">${E(r.code)}</td>
+          <td>${r.saleCount} sale(s) \u2014 ${GH(r.totalSales)}</td>
+          <td>${GH(r.totalCommission)}</td>
+          <td><span class="tag ${r.is_active?'active':'inactive'}">${r.is_active?'Active':'Inactive'}</span></td>
+        </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--text-faint);">No team members yet \u2014 share your recruiting link above.</td></tr>'}</tbody>
+    </table>
+    <div class="section-title">Your override commission history</div>
+    ${commissionTable(data.ownCommissions, false)}
+  `;
+}
+
+function renderFinanceDashboard(data) {
+  const c = document.getElementById('dash-content');
+  const isMaster = data.agent.role === 'master';
+  c.innerHTML = `
+    <div class="stat-cards">
+      <div class="stat-card"><div class="label">Total unpaid</div><div class="value">${GH(data.totalOwed)}</div></div>
+      <div class="stat-card"><div class="label">Total paid out</div><div class="value">${GH(data.totalPaid)}</div></div>
+      <div class="stat-card"><div class="label">Total commission events</div><div class="value">${(data.allCommissions||[]).length}</div></div>
+    </div>
+    ${isMaster ? `
+      <div class="section-title">Agents</div>
+      <table class="dash-table">
+        <thead><tr><th>Name</th><th>Code</th><th>Role</th><th>Region</th><th>Status</th><th></th></tr></thead>
+        <tbody>${(data.allAgents||[]).map(a => `
+          <tr>
+            <td>${E(a.full_name)}</td>
+            <td style="font-family:var(--font-mono);">${E(a.code)}</td>
+            <td style="text-transform:capitalize;">${E((a.role||'').replace('_',' '))}</td>
+            <td>${E(a.region||'\u2014')}</td>
+            <td><span class="tag ${a.is_active?'active':'inactive'}">${a.is_active?'Active':'Inactive'}</span></td>
+            <td><button class="mini-btn" onclick="toggleAgentStatus('${a.id}',${!a.is_active})">${a.is_active?'Deactivate':'Reactivate'}</button></td>
+          </tr>`).join('')}</tbody>
+      </table>
+    ` : ''}
+    <div class="section-title">All commissions</div>
+    ${commissionTable(data.allCommissions, true)}
+  `;
+}
+
+function commissionTable(rows, showMarkPaid) {
+  if (!rows || !rows.length) return '<div class="es">No commission records yet.</div>';
+  return `
+    <table class="dash-table">
+      <thead><tr>
+        ${showMarkPaid ? '<th>Agent</th>' : ''}
+        <th>Date</th><th>Product</th><th>Type</th><th>Sale amount</th><th>Commission</th><th>Status</th>${showMarkPaid?'<th></th>':''}
+      </tr></thead>
+      <tbody>${rows.map(r => `
+        <tr>
+          ${showMarkPaid ? `<td>${E(r.sales_agents?.full_name||'\u2014')} <span style="color:var(--text-faint);">(${E(r.sales_agents?.code||'')})</span></td>` : ''}
+          <td>${new Date(r.created_at).toLocaleDateString()}</td>
+          <td style="text-transform:uppercase;">${E(r.product)}</td>
+          <td style="text-transform:capitalize;">${E((r.event_type||'').replace('_',' '))}</td>
+          <td>${GH(r.amount_paid)}</td>
+          <td>${GH(r.commission_amount)}</td>
+          <td><span class="tag ${r.status}">${E(r.status)}</span></td>
+          ${showMarkPaid ? `<td><button class="mini-btn" onclick="toggleCommissionPaid('${r.id}',${r.status!=='paid'})">${r.status==='paid'?'Mark unpaid':'Mark paid'}</button></td>` : ''}
+        </tr>`).join('')}</tbody>
+    </table>
+  `;
+}
+
+function copyRecruitLink() {
+  const input = document.getElementById('recruit-link');
+  input.select();
+  document.execCommand('copy');
+}
+
+async function toggleCommissionPaid(attributionId, paid) {
+  const { ok, data } = await callDash('mark-commission-paid', { body: { attributionId, paid } });
+  if (!ok || !data.ok) { alert(data.error || 'Could not update.'); return; }
+  await loadDashboard();
+}
+
+async function toggleAgentStatus(agentId, isActive) {
+  const { ok, data } = await callDash('set-agent-status', { body: { agentId, isActive } });
+  if (!ok || !data.ok) { alert(data.error || 'Could not update.'); return; }
+  await loadDashboard();
+}
+
+// If already signed in from a previous visit, skip straight to the dashboard.
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) { accessToken = session.access_token; await loadDashboard(); }
+})();
+</script>
+
+</body>
+</html>
