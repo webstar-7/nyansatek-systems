@@ -10,7 +10,7 @@
    window.PAYSTACK_PUBLIC_KEY set below to your real key.
    ============================================================ */
 
-const PAYSTACK_PUBLIC_KEY = "pk_test_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY";
+const PAYSTACK_PUBLIC_KEY = "pk_live_f06348c9521967084c78419c709c740c7d3b51d2";
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product") || "pos";
