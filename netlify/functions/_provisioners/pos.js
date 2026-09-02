@@ -64,10 +64,10 @@
    ============================================================ */
 
 async function provisionPOS({ supabase, slug, business, credentials, catalogPlan, reference }) {
-  // Plan tiers only carry a store limit in the "multi" tier (3 stores);
-  // both "standard" and "yearly" are the single-store tier at different
-  // billing cycles -- see _catalog.js.
-  const maxStores = business.plan === "multi" ? 3 : 1;
+  // Store count is no longer plan-gated -- with only 2 plans left
+  // (monthly/yearly, see _catalog.js), the 3-store rebuild is available
+  // to every POS customer regardless of billing cycle.
+  const maxStores = 3;
 
   // ---- 1. Create the actual login (Supabase Auth) ----
   // NOTE: this synchronously fires on_auth_user_created, which
