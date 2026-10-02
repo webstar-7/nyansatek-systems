@@ -31,6 +31,15 @@ const NYANSATEK_CATALOG = {
       yearly_4000: { label: "Yearly — up to 4,000 students",  price: 4500000, cycle: "yearly",  cycleLabel: "per year",  includesSms: 100000 },
       yearly_4500: { label: "Yearly — up to 4,500 students",  price: 5000000, cycle: "yearly",  cycleLabel: "per year",  includesSms: 112500 }
     }
+  },
+  gold: {
+    name: "NYANSATEK Gold Dealership",
+    liveUrl: "https://nyansatek.gold", // TODO: update to the real Gold domain
+    plans: {
+      // TODO: PLACEHOLDER — confirm real pricing before launch, keep in sync with _catalog.js
+      standard: { label: "Monthly", price: 35000, cycle: "monthly", cycleLabel: "per month" },
+      yearly:   { label: "Yearly", price: 350000, cycle: "yearly", cycleLabel: "per year" }
+    }
   }
 };
 

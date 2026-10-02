@@ -35,6 +35,13 @@
    flow actually reads this field yet (only `price` is verified) -- it
    only matters once/if real Paystack Card Subscriptions get built on
    top of these.
+
+   Gold: PLACEHOLDER pricing below (GH₵350/mo, GH₵3,500/yr) -- pick
+   real numbers before going live, create matching Plans in the
+   Paystack dashboard, and paste the real paystackPlanCode values in
+   here (same as the 14 School codes above were done). Nothing else
+   in the checkout/provisioning pipeline needs to change once this
+   object and js/products.js have real numbers + codes.
    ================================================================ */
 
 const CATALOG = {
@@ -62,6 +69,17 @@ const CATALOG = {
       yearly_3500: { label: "Yearly — up to 3,500 students",  price: 4000000, cycle: "yearly",  studentCap: 3500, includesSms: 87500,  paystackPlanCode: "PLN_jaocxu7w3isr0mo" },
       yearly_4000: { label: "Yearly — up to 4,000 students",  price: 4500000, cycle: "yearly",  studentCap: 4000, includesSms: 100000, paystackPlanCode: "PLN_3to649nkq1zjrfz" },
       yearly_4500: { label: "Yearly — up to 4,500 students",  price: 5000000, cycle: "yearly",  studentCap: 4500, includesSms: 112500, paystackPlanCode: "PLN_k6gnd0l7yi8e25z" },
+    },
+  },
+  gold: {
+    name: "NYANSATEK Gold Dealership",
+    loginUrl: "https://nyansatek.gold", // TODO: update once the real Gold domain exists (or keep it on Netlify's default subdomain)
+    plans: {
+      // TODO: PLACEHOLDER prices + plan codes -- confirm real pricing,
+      // create matching Plans in the Paystack dashboard, paste the
+      // real paystackPlanCode values here before going live.
+      standard: { label: "Monthly", price: 35000, cycle: "monthly", paystackPlanCode: "PLN_REPLACE_GOLD_MONTHLY" },
+      yearly:   { label: "Yearly", price: 350000, cycle: "yearly", paystackPlanCode: "PLN_REPLACE_GOLD_YEARLY" },
     },
   },
 };

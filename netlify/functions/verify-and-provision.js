@@ -10,8 +10,8 @@
       even if this endpoint is called twice (e.g. webhook + client
       callback both fire).
    3. Create the tenant + starter data, in whichever Supabase
-      PROJECT actually backs the product purchased (POS and
-      School are two separate projects — see _supabase.js).
+      PROJECT actually backs the product purchased (POS, School,
+      and Gold are three separate projects — see _supabase.js).
    4. Send credentials by SMS + email.
 
    Every step's progress is written to `provisioning_jobs`, which
@@ -27,8 +27,9 @@ const { sendSMS, sendEmail, welcomeEmailHTML } = require("./_lib/notify");
 const { addCycle, createCardSubscription, generateCommissions } = require("./_lib/billing");
 const { provisionPOS } = require("./_provisioners/pos");
 const { provisionSchool } = require("./_provisioners/school");
+const { provisionGold } = require("./_provisioners/gold");
 
-const PROVISIONERS = { pos: provisionPOS, school: provisionSchool };
+const PROVISIONERS = { pos: provisionPOS, school: provisionSchool, gold: provisionGold };
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -134,7 +135,7 @@ exports.handler = async (event) => {
     const tempPassword = generateTempPassword();
     const provisioner = PROVISIONERS[order.product];
     const tenant = await provisioner({
-      supabase: tenantDb, // <-- POS orders write to the POS project, School orders to the School project
+      supabase: tenantDb, // <-- POS orders write to the POS project, School orders to the School project, Gold orders to the Gold project
       slug,
       business: { ...order, plan: order.plan },
       credentials: { tempPassword },
@@ -151,7 +152,7 @@ exports.handler = async (event) => {
     // function) initiates a fresh charge each cycle using those same
     // details -- the customer still approves via PIN each time, which is
     // a Ghana-wide MoMo constraint, not something we can bypass.
-    const TENANT_TABLES = { pos: "organizations", school: "institutions" };
+    const TENANT_TABLES = { pos: "organizations", school: "institutions", gold: "organizations" };
     const tenantTable = TENANT_TABLES[order.product];
     const channel = txn.channel; // 'card' | 'mobile_money' (as returned by Paystack's verify endpoint)
     const paidThroughDate = addCycle(new Date(), catalogPlan.cycle);
@@ -220,19 +221,16 @@ exports.handler = async (event) => {
     // ---- 5. notify the customer ----
     await jobsDb.from("provisioning_jobs").update({ state: "notifying" }).eq("reference", reference);
 
-    // The two products authenticate differently on the real login
-    // screens, confirmed via a live test purchase + SQL inspection
-    // (Aug 2026):
-    //   - POS: the admin/owner (the person who just paid) logs in with
-    //     the EXACT business name via the login_lookup table. The
-    //     generated slug only resolves through staff_login_lookup,
-    //     which is filtered to role='cashier' -- it does NOT include
-    //     admins. Sending the slug here produces a credential the
-    //     paying customer's own account can't use.
+    // Login identifier by product, confirmed via a live test purchase +
+    // SQL inspection (Aug 2026) for POS/School, and matched for Gold
+    // since its login_lookup/profiles pattern mirrors POS exactly:
+    //   - POS & Gold: the admin/owner logs in with the EXACT business
+    //     name via the login_lookup table. The generated slug only
+    //     resolves through staff_login_lookup, which is filtered to
+    //     non-owner roles -- it does NOT include the owner who just paid.
     //   - School: the login screen takes an email directly (teachers/
-    //     parents log in by email too, so the whole product is
-    //     email-identified) -- the slug isn't an email at all, and
-    //     the field HTML5-validates as one.
+    //     parents log in by email too) -- the slug isn't an email at
+    //     all, and the field HTML5-validates as one.
     const loginIdentifier = order.product === "school" ? order.email : order.businessName;
 
     const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;

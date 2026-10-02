@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYANSATEK Gold — Gold buying system for dealerships</title>
+<meta name="theme-color" content="#0D1320">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 32 32
+                   C 32 21, 24 15, 18 20
+                   C 12 25, 15 34, 24 34
+                   C 29 34, 32 31, 32 32
+                   C 32 40, 40 47, 46 43"/>
+          <path d="M 32 32
+                   C 32 21, 40 15, 46 20
+                   C 52 25, 49 34, 40 34
+                   C 36.4 34, 33.6 32.6, 32.4 30.8
+                   M 30.2 33.6
+                   C 27 39, 20 45, 18 43"/>
+        </g>
+      </svg>
+      <span>NYANSATEK<small>Systems</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#products">Products</a>
+      <a href="index.html#about">About</a>
+      <a href="tutorials.html">Tutorials</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#feedback">Reviews</a>
+      <a href="https://nyansatek.gold" target="_blank" rel="noopener">Existing customer? Sign in</a>
+    </nav>
+    <a href="checkout.html?product=gold&plan=standard" class="btn btn-gold">Buy now</a>
+  </div>
+</header>
+
+<div class="detail-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Systems</a> / Gold</div>
+    <span class="product-tag">Gold Dealership</span>
+    <h1 style="font-size:clamp(32px,4vw,46px); margin-top:16px;">NYANSATEK Gold</h1>
+    <p style="color:var(--text-dim); font-size:17px; max-width:56ch; margin-top:14px;">
+      The gold buying app a dealership actually needs: Refined and Box purchases priced the way the market
+      really works, a live karat chart, cash released to the dealer tracked against what's spent, and a
+      daily opening/closing balance you can hand straight to an accountant.
+    </p>
+  </div>
+</div>
+
+<section style="padding-top:56px;">
+  <div class="wrap detail-grid">
+    <div>
+      <h2 style="font-size:24px; margin-bottom:18px;">What's included</h2>
+      <ul class="feat-list-detail">
+        <li>Refined (by density/karat) and Box pricing, calculated automatically</li>
+        <li>Built-in gold karat density chart lookup</li>
+        <li>World gold market tracker — USD and Ghana cedi equivalent</li>
+        <li>Cash float received vs. cash paid out for purchases</li>
+        <li>Daily opening and closing balance reconciliation</li>
+        <li>Stock on hand split by Refined vs. Box</li>
+        <li>Per-seller purchase history and receipts</li>
+        <li>Staff accounts with their own logins</li>
+        <li>Profit reporting with per-kind average cost</li>
+      </ul>
+
+      <h2 style="font-size:24px; margin:44px 0 18px;">Specifications</h2>
+      <table class="spec-table">
+        <tr><td>Devices</td><td>Any browser — phone, tablet, or desktop</td></tr>
+        <tr><td>Offline purchases</td><td>Not required online for every entry; syncs on reconnect</td></tr>
+        <tr><td>Data</td><td>Isolated per dealership, backed up daily</td></tr>
+        <tr><td>Receipts</td><td>Print or reprint any purchase receipt from history</td></tr>
+        <tr><td>Setup time</td><td>Live within minutes of payment</td></tr>
+      </table>
+    </div>
+
+    <div class="buy-card">
+      <h3 style="font-size:18px; margin-bottom:18px;">Choose a plan</h3>
+
+      <label class="plan-option selected">
+        <span class="plan-label"><input type="radio" name="plan" value="standard" checked> Monthly</span>
+        <span class="plan-price">GH₵350/mo</span>
+      </label>
+      <label class="plan-option">
+        <span class="plan-label"><input type="radio" name="plan" value="yearly"> Yearly</span>
+        <span class="plan-price">GH₵3,500/yr</span>
+      </label>
+      <p style="font-size:12.5px; color:var(--text-dim); margin:10px 0 0;">
+        Pricing rates, karat chart, and staff accounts are included on every plan.
+      </p>
+
+      <a href="checkout.html?product=gold&plan=standard" class="btn btn-gold btn-block" style="margin-top:14px;" id="gold-checkout-link">Continue to checkout</a>
+      <p style="font-size:12.5px; color:var(--text-faint); margin-top:14px;">
+        No setup fee. Cancel anytime. Login details sent by SMS and email right after payment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 32 32
+                   C 32 21, 24 15, 18 20
+                   C 12 25, 15 34, 24 34
+                   C 29 34, 32 31, 32 32
+                   C 32 40, 40 47, 46 43"/>
+          <path d="M 32 32
+                   C 32 21, 40 15, 46 20
+                   C 52 25, 49 34, 40 34
+                   C 36.4 34, 33.6 32.6, 32.4 30.8
+                   M 30.2 33.6
+                   C 27 39, 20 45, 18 43"/>
+        </g>
+      </svg>
+        <span style="color:var(--text)">NYANSATEK<small>Systems</small></span>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="product-pos.html">POS</a>
+          <a href="product-school.html">School</a>
+          <a href="product-gold.html">Gold</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="index.html#about">About</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="index.html#feedback">Customer Feedback</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="index.html#terms">Terms of Service</a>
+          <a href="index.html#privacy">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <h5>Support</h5>
+          <a href="tel:0536340578">0536 340 578</a>
+          <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
+      <span>Obuasi, Ghana</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.plan-option input[name="plan"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      document.querySelectorAll('.plan-option').forEach(function (opt) { opt.classList.remove('selected'); });
+      this.closest('.plan-option').classList.add('selected');
+      document.getElementById('gold-checkout-link').href = 'checkout.html?product=gold&plan=' + this.value;
+    });
+  });
+</script>
+
+</body>
+</html>
