@@ -44,13 +44,18 @@
       </svg>
       <span>NYANSATEK<small>Systems</small></span>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" id="nav-links">
       <a href="index.html#products">Products</a>
+      <a href="index.html#hardware">Hardware</a>
       <a href="index.html#about">About</a>
       <a href="tutorials.html">Tutorials</a>
       <a href="index.html#faq">FAQ</a>
     </nav>
     <a href="index.html#products" class="btn btn-gold">Get started</a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <svg class="icon-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
   </div>
 </header>
 
@@ -166,6 +171,8 @@
           <h5>Products</h5>
           <a href="product-pos.html">POS</a>
           <a href="product-school.html">School</a>
+          <a href="product-gold.html">Gold</a>
+          <a href="index.html#hardware">Hardware</a>
         </div>
         <div class="footer-col">
           <h5>Company</h5>
@@ -293,5 +300,26 @@ document.getElementById('apply-form').addEventListener('submit', async (e) => {
 });
 </script>
 
+
+<script>
+// Mobile nav toggle
+(function () {
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  if (!toggle || !links) return;
+  function closeMenu() {
+    links.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+})();
+</script>
 </body>
 </html>
