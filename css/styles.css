@@ -23,7 +23,7 @@
   --font-mono: 'JetBrains Mono', monospace;
 
   /* layout */
-  --max: 1320px;
+  --max: min(1760px, 94vw);
   --radius: 10px;
   --radius-sm: 6px;
 }
@@ -269,7 +269,7 @@ section { padding: 84px 0; position: relative; }
 /* ---------- product cards ---------- */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 .product-card {
@@ -335,6 +335,9 @@ section { padding: 84px 0; position: relative; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 22px;
+}
+@media (min-width: 1200px) {
+  .hardware-grid { grid-template-columns: repeat(4, 1fr); }
 }
 .hardware-card {
   background: var(--bg-card);
@@ -701,6 +704,7 @@ footer.site {
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .feat-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-grid { gap: 36px; }
 }
 
