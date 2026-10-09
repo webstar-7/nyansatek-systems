@@ -803,3 +803,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, .plan-option:focus-w
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+
+/* ---------- customer quotes ---------- */
+.quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+.quote-grid.single { max-width: 640px; }
+.quote {
+  margin: 0; padding: 26px; display: flex; flex-direction: column; gap: 16px;
+  background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.quote .product-tag { align-self: flex-start; }
+.quote blockquote { margin: 0; }
+.quote blockquote p { color: var(--text); font-size: 16px; line-height: 1.65; }
+.quote figcaption { margin-top: auto; color: var(--text-dim); font-size: 14px; }
+.quote figcaption strong { color: var(--text); font-weight: 600; }
