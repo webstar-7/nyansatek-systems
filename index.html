@@ -6,6 +6,17 @@
 <title>NYANSATEK — IT Consultancy &amp; Outsourcing</title>
 <meta name="description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
 <meta name="theme-color" content="#0D1320">
+<link rel="canonical" href="https://nyansatek.systems/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NYANSATEK Systems">
+<meta property="og:title" content="NYANSATEK — IT Consultancy &amp; Outsourcing">
+<meta property="og:description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
+<meta property="og:url" content="https://nyansatek.systems/">
+<meta property="og:image" content="https://nyansatek.systems/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NYANSATEK — IT Consultancy &amp; Outsourcing">
+<meta name="twitter:description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
+<meta name="twitter:image" content="https://nyansatek.systems/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
@@ -41,7 +52,7 @@
       <a href="index.html#why">Why Us</a>
       <a href="platform.html">Our Software</a>
       <a href="index.html#contact">Contact</a>
-      <a href="https://nyansatek.shop" target="_blank" rel="noopener">Existing customer? Sign in</a>
+      <a href="signin.html">Customer sign-in</a>
     </nav>
     <a href="index.html#contact" class="btn btn-gold">Get in touch</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
@@ -211,13 +222,37 @@
       <h2>The same NYANSATEK, a wider focus.</h2>
     </div>
     <div class="prose" style="max-width:760px;margin:0;padding:0;">
-      <p>NYANSATEK is a Ghanaian business based in Obuasi, Ashanti Region. We've built and run our own software products for years — <a href="platform.html">NYANSATEK POS, School, and Gold</a> are all live, in active use, and not going anywhere.</p>
+      <p>NYANSATEK is a Ghanaian business based in Obuasi, Ashanti Region. We build and run our own software products — <a href="platform.html">NYANSATEK POS, School, and Gold</a> are all live, in active use, and not going anywhere.</p>
       <p>This page is about the other half of what we do: taking on a client's IT entirely — hardware, software, infrastructure — as an outsourced partner, the same way we've built and supported our own systems. Refocusing doesn't mean stepping away from the software; it means offering the same judgment and hands-on support to businesses, enterprises, and government bodies who need it.</p>
       <p>The name comes from <em>nyansa</em>, the Twi word for wisdom — the idea that good IT work is about judgment, not just delivery.</p>
+      <p>NYANSATEK is founder-led: Robert Ofori-Boahene leads the business and is directly reachable on the number below.</p>
       <p>Reach us at <a href="tel:0536340578">0536 340 578</a> or <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>.</p>
     </div>
   </div>
 </section>
+
+<!--
+  PROOF / CLIENTS  --  uncomment and fill in ONLY with real clients and real quotes (with their permission).
+
+<section id="clients">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Trusted by</span>
+      <h2>Businesses we work with.</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <h4>[Client name]</h4>
+        <p>[One line on what you did for them and the result.]</p>
+      </div>
+      <div class="feat">
+        <h4>[Client name]</h4>
+        <p>"[Short quote.]" — [Name, role]</p>
+      </div>
+    </div>
+  </div>
+</section>
+-->
 
 <section id="contact">
   <div class="wrap">
@@ -236,9 +271,44 @@
         <p><a href="mailto:support@nyansatek.systems" style="color:var(--gold);">support@nyansatek.systems</a></p>
       </div>
       <div class="feat">
+        <h4>💬 WhatsApp</h4>
+        <p><a href="https://wa.me/233536340578" target="_blank" rel="noopener" style="color:var(--gold);">Message us on WhatsApp</a></p>
+      </div>
+      <div class="feat">
         <h4>📍 Address</h4>
         <p>P.O. Box 10, Obuasi, Ashanti Region, Ghana</p>
       </div>
+    </div>
+
+    <div style="max-width:560px;margin-top:40px;">
+      <h3 style="margin-bottom:14px;">Or send us a message</h3>
+      <div id="ct-success" class="status-success" style="display:none;">Thank you — your message has been sent. We'll get back to you shortly.</div>
+      <div id="ct-error" class="status-msg error"></div>
+      <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact">
+        <p style="display:none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+        <div class="field-row">
+          <div class="field">
+            <label for="ct-name">Your name</label>
+            <input type="text" id="ct-name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="ct-org">Business / organisation</label>
+            <input type="text" id="ct-org" name="organisation">
+          </div>
+        </div>
+        <div class="field">
+          <label for="ct-contact">Email or phone</label>
+          <input type="text" id="ct-contact" name="contact" required>
+        </div>
+        <div class="field">
+          <label for="ct-message">What do you need help with?</label>
+          <textarea id="ct-message" name="message" rows="5" required
+            style="width:100%;background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;color:var(--text);font-family:var(--font-body);font-size:15px;resize:vertical;"
+            placeholder="Tell us a little about your business and what you're looking for."></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block" id="ct-submit">Send message</button>
+      </form>
     </div>
   </div>
 </section>
@@ -281,8 +351,8 @@
         </div>
         <div class="footer-col">
           <h5>Legal</h5>
-          <a href="platform.html#terms">Terms of Service</a>
-          <a href="platform.html#privacy">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="privacy.html">Privacy Policy</a>
         </div>
         <div class="footer-col">
           <h5>Support</h5>
@@ -317,6 +387,35 @@
   });
   links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+})();
+</script>
+
+<script>
+// Enquiry form -> Netlify Forms (same approach as the feedback form on /platform).
+(function () {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var ok = document.getElementById('ct-success');
+  var err = document.getElementById('ct-error');
+  var btn = document.getElementById('ct-submit');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.classList.remove('show');
+    btn.disabled = true; btn.innerText = 'Sending...';
+    var body = Array.from(new FormData(form)).map(function (kv) {
+      return encodeURIComponent(kv[0]) + '=' + encodeURIComponent(kv[1]);
+    }).join('&');
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Submission failed');
+        form.style.display = 'none'; ok.style.display = 'block';
+      })
+      .catch(function () {
+        err.innerText = 'Something went wrong sending that — please call 0536 340 578 or email support@nyansatek.systems.';
+        err.classList.add('show');
+      })
+      .finally(function () { btn.disabled = false; btn.innerText = 'Send message'; });
+  });
 })();
 </script>
 

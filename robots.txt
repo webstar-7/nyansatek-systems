@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /portal
+Disallow: /checkout
+Disallow: /success
+
+Sitemap: https://nyansatek.systems/sitemap.xml
