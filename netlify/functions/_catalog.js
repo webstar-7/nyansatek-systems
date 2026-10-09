@@ -73,7 +73,7 @@ const CATALOG = {
   },
   gold: {
     name: "NYANSATEK Gold Dealership",
-    loginUrl: "https://nyansatek.gold", // TODO: update once the real Gold domain exists (or keep it on Netlify's default subdomain)
+    loginUrl: "https://webstar-7.github.io/gold", // TEMP: Gold runs on GitHub Pages until the nyansatek.gold domain is bought; then switch back to https://nyansatek.gold
     plans: {
       // TODO: PLACEHOLDER prices + plan codes -- confirm real pricing,
       // create matching Plans in the Paystack dashboard, paste the

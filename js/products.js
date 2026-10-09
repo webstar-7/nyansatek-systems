@@ -34,7 +34,7 @@ const NYANSATEK_CATALOG = {
   },
   gold: {
     name: "NYANSATEK Gold Dealership",
-    liveUrl: "https://nyansatek.gold", // TODO: update to the real Gold domain
+    liveUrl: "https://webstar-7.github.io/gold", // TEMP: Gold runs on GitHub Pages until the nyansatek.gold domain is bought; then switch back to https://nyansatek.gold
     plans: {
       // TODO: PLACEHOLDER — confirm real pricing before launch, keep in sync with _catalog.js
       standard: { label: "Monthly", price: 35000, cycle: "monthly", cycleLabel: "per month" },
