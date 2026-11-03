@@ -23,6 +23,51 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="motion">
+/* Motion layer for the Our Software page (Remotion demo + live effects) */
+.hero{overflow:hidden}
+.hero #net{position:absolute;inset:0;width:100%;height:100%;opacity:.7;pointer-events:none;z-index:0}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(55% 70% at 15% 30%,rgba(227,165,76,.13),transparent 70%),radial-gradient(45% 60% at 90% 75%,rgba(62,144,136,.15),transparent 70%)}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{animation:mrise .9s cubic-bezier(.16,1,.3,1) both}
+.hero h1 .accent{display:inline-block;animation:mrise .9s .18s cubic-bezier(.16,1,.3,1) both;background:linear-gradient(90deg,var(--gold),#F4CF8C,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:mrise .9s .18s cubic-bezier(.16,1,.3,1) both,mshine 5s 1.2s linear infinite}
+.hero .lede,.hero .hero-cta{animation:mrise .9s .3s cubic-bezier(.16,1,.3,1) both}
+@keyframes mrise{from{opacity:.15;translate:0 24px}to{opacity:1;translate:0 0}}
+@keyframes mshine{to{background-position:-200% 0}}
+.trust-strip span{display:inline-flex;align-items:center;gap:10px}
+.trust-strip span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(62,144,136,.6);animation:mping 2.4s infinite}
+.trust-strip span:nth-child(2)::before{animation-delay:.6s}.trust-strip span:nth-child(3)::before{animation-delay:1.2s}.trust-strip span:nth-child(4)::before{animation-delay:1.8s}
+@keyframes mping{70%{box-shadow:0 0 0 9px rgba(62,144,136,0)}100%{box-shadow:0 0 0 0 rgba(62,144,136,0)}}
+.sw-demo{padding-top:64px}
+.sw-reel{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--bg-raised);aspect-ratio:16/9;max-width:100%;box-shadow:0 50px 100px -40px #000,0 0 0 1px rgba(227,165,76,.12)}
+.sw-reel video{display:block;width:100%;height:100%;object-fit:cover}
+.sw-reel .sw-pp{position:absolute;right:12px;bottom:12px;padding:7px 14px;font-size:13px;background:rgba(13,19,32,.7);backdrop-filter:blur(6px)}
+.sw-jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.sw-jump button{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;color:var(--text-dim);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.sw-jump button:hover,.sw-jump button.on{border-color:var(--gold);color:var(--text);background:rgba(227,165,76,.1)}
+.product-card,.hardware-card,.feat{position:relative;overflow:hidden}
+.product-card::before,.hardware-card::before,.feat::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(227,165,76,.13),transparent 60%)}
+.product-card:hover::before,.hardware-card:hover::before,.feat:hover::before{opacity:1}
+.product-card .price{transition:color .3s}
+.product-card:hover .price{color:var(--gold)}
+.product-feats li{transition:translate .3s}
+.product-card:hover .product-feats li{translate:4px 0}
+.product-card:hover .product-feats li:nth-child(2){transition-delay:.03s}.product-card:hover .product-feats li:nth-child(3){transition-delay:.06s}.product-card:hover .product-feats li:nth-child(4){transition-delay:.09s}.product-card:hover .product-feats li:nth-child(5){transition-delay:.12s}
+.steps .step{position:relative;border-top-color:var(--line)}
+.steps .step::before{content:"";position:absolute;left:0;top:-2px;height:2px;width:100%;background:var(--gold);scale:var(--fill,0) 1;transform-origin:left;transition:scale .6s cubic-bezier(.16,1,.3,1)}
+.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:56px;height:56px;border-radius:50%;background:var(--teal);display:grid;place-items:center;box-shadow:0 12px 30px -8px #000;transition:scale .25s}
+.wa-float:hover{scale:1.08}
+.wa-float::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--teal);animation:mring 2.4s infinite}
+@keyframes mring{to{scale:1.6;opacity:0}}
+.wa-float svg{width:28px;height:28px;color:#fff}
+.m-pre{opacity:0;translate:0 26px}
+.m-in{opacity:1;translate:0 0;transition:opacity .8s cubic-bezier(.16,1,.3,1),translate .8s cubic-bezier(.16,1,.3,1)}
+@media(prefers-reduced-motion:reduce){
+  .hero h1,.hero h1 .accent,.hero .lede,.hero .hero-cta,.trust-strip span::before,.wa-float::before{animation:none!important}
+  .hero h1 .accent{color:var(--gold);background:none}
+  .hero #net{display:none}.m-pre{opacity:1;translate:none}
+}
+</style>
 </head>
 <body>
 
@@ -64,6 +109,7 @@
 </header>
 
 <section class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Nyansa — Twi for wisdom</span>
@@ -80,6 +126,26 @@
     <span>MoMo &amp; card checkout</span>
     <span>Live in minutes</span>
     <span>Built &amp; supported from Obuasi</span>
+  </div>
+</section>
+
+<section class="sw-demo" id="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">See them in action</span>
+      <h2>Three systems, one minute.</h2>
+      <p>A quick look at a sale on NYANSATEK POS, morning attendance on NYANSATEK School, and a priced purchase on NYANSATEK Gold. Sample data shown.</p>
+    </div>
+    <div class="sw-reel">
+      <video id="sw-video" src="assets/nyansatek-software.mp4" poster="assets/software-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Demo of NYANSATEK POS, School and Gold"></video>
+      <button type="button" class="btn btn-ghost sw-pp" id="sw-pp" aria-pressed="false">Pause</button>
+    </div>
+    <div class="sw-jump" role="group" aria-label="Jump to a system in the demo">
+      <button type="button" data-t="3">NYANSATEK POS</button>
+      <button type="button" data-t="8.2">NYANSATEK School</button>
+      <button type="button" data-t="13">NYANSATEK Gold</button>
+      <button type="button" data-t="18">How setup works</button>
+    </div>
   </div>
 </section>
 
@@ -660,6 +726,91 @@ form.addEventListener('submit', async (e) => {
     submitBtn.innerText = 'Send feedback';
   }
 });
+</script>
+
+<a class="wa-float" href="https://wa.me/233536340578" target="_blank" rel="noopener" aria-label="Chat with NYANSATEK on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+// Motion layer: demo video controls, hero network, card spotlight, scroll reveals, step progress.
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var v = document.getElementById('sw-video'), pp = document.getElementById('sw-pp');
+  if (v) {
+    if (reduce) { v.removeAttribute('autoplay'); v.pause(); pp.textContent = 'Play'; }
+    pp.addEventListener('click', function () {
+      if (v.paused) { v.play(); pp.textContent = 'Pause'; pp.setAttribute('aria-pressed', 'false'); }
+      else { v.pause(); pp.textContent = 'Play'; pp.setAttribute('aria-pressed', 'true'); }
+    });
+    var jumps = document.querySelectorAll('.sw-jump button');
+    jumps.forEach(function (b) {
+      b.addEventListener('click', function () { v.currentTime = parseFloat(b.dataset.t); v.play(); pp.textContent = 'Pause'; });
+    });
+    v.addEventListener('timeupdate', function () {
+      var t = v.currentTime, idx = t < 2.8 ? -1 : t < 7.9 ? 0 : t < 12.8 ? 1 : t < 17.8 ? 2 : 3;
+      jumps.forEach(function (b, i) { b.classList.toggle('on', i === idx); });
+    });
+  }
+
+  document.querySelectorAll('.product-card,.hardware-card,.feat').forEach(function (c) {
+    c.addEventListener('pointermove', function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('m-in'); e.target.classList.remove('m-pre'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('section:not(.hero) .section-head, .sw-reel, .product-card, .step, .feat, .hardware-card, #customers blockquote, #faq details').forEach(function (el, i) {
+      if (el.getBoundingClientRect().top > innerHeight * 0.95) {
+        el.classList.add('m-pre'); el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el);
+      }
+    });
+  }
+
+  var steps = document.querySelectorAll('.steps .step');
+  function fill() {
+    steps.forEach(function (s, i) {
+      var r = s.getBoundingClientRect();
+      s.style.setProperty('--fill', r.top < innerHeight * 0.85 ? 1 : 0);
+      s.style.transitionDelay = i * 120 + 'ms';
+    });
+  }
+  addEventListener('scroll', fill, { passive: true }); fill();
+
+  var cv = document.getElementById('net');
+  if (!reduce && cv && cv.getContext) {
+    var ctx = cv.getContext('2d'), pts = [], W, H, dpr = Math.min(2, devicePixelRatio || 1), m = { x: -999, y: -999 };
+    function size() {
+      var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(80, W * H / 16000)); pts = [];
+      for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, g: Math.random() < .25 });
+    }
+    size(); addEventListener('resize', size);
+    cv.parentElement.addEventListener('pointermove', function (e) { var r = cv.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; });
+    cv.parentElement.addEventListener('pointerleave', function () { m.x = m.y = -999; });
+    (function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i]; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+        var dx = p.x - m.x, dy = p.y - m.y, dm = Math.hypot(dx, dy); if (dm < 120) { p.x += dx / dm * .8; p.y += dy / dm * .8; }
+        for (var j = i + 1; j < pts.length; j++) {
+          var q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
+          if (d < 130) { ctx.strokeStyle = 'rgba(62,144,136,' + (1 - d / 130) * .35 + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+        }
+        ctx.fillStyle = p.g ? 'rgba(227,165,76,.9)' : 'rgba(166,175,196,.55)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.g ? 2.2 : 1.5, 0, 7); ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    })();
+  }
+})();
 </script>
 
 </body>
