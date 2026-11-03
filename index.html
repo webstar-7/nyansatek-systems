@@ -3,435 +3,691 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NYANSATEK — IT Consultancy &amp; Outsourcing</title>
-<meta name="description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
+<title>NYANSATEK — Web Design, IT Consultancy &amp; Outsourcing</title>
+<meta name="description" content="NYANSATEK is a single outsourced IT partner in Obuasi, Ghana — website design &amp; development, hardware, software and infrastructure. One contract, one point of accountability.">
 <meta name="theme-color" content="#0D1320">
 <link rel="canonical" href="https://nyansatek.systems/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NYANSATEK Systems">
-<meta property="og:title" content="NYANSATEK — IT Consultancy &amp; Outsourcing">
-<meta property="og:description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
+<meta property="og:title" content="NYANSATEK — Web Design, IT Consultancy &amp; Outsourcing">
+<meta property="og:description" content="NYANSATEK is a single outsourced IT partner in Obuasi, Ghana — website design &amp; development, hardware, software and infrastructure. One contract, one point of accountability.">
 <meta property="og:url" content="https://nyansatek.systems/">
 <meta property="og:image" content="https://nyansatek.systems/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NYANSATEK — IT Consultancy &amp; Outsourcing">
-<meta name="twitter:description" content="NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, for SMEs, enterprises and government.">
+<meta name="twitter:title" content="NYANSATEK — Web Design, IT Consultancy &amp; Outsourcing">
+<meta name="twitter:description" content="NYANSATEK is a single outsourced IT partner in Obuasi, Ghana — website design &amp; development, hardware, software and infrastructure. One contract, one point of accountability.">
 <meta name="twitter:image" content="https://nyansatek.systems/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* Layout: dark brand canvas; animated network hero → ticker → five-pillar bento (web design leads) → web studio spotlight → showreel → audiences/engagement → proof → contact */
+:root{
+  --bg:#0D1320;--bg-raised:#141C2C;--bg-card:#182238;--line:#263149;
+  --gold:#E3A54C;--gold-dim:#B98637;--teal:#3E9088;
+  --text:#F1ECE1;--text-dim:#A6AFC4;--text-faint:#6C7690;--on-gold:#1A1206;
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-body:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --max:min(1240px,100%);--radius:14px;--radius-sm:8px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img,video{max-width:100%}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(min-width:700px){.wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
+.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.section{padding-block:clamp(64px,10vw,120px)}
+.section-head{display:flex;flex-direction:column;gap:14px;max-width:720px;margin-bottom:44px}
+.section-head h2{font-size:clamp(1.9rem,4.2vw,3rem)}
+.section-head p{color:var(--text-dim);font-size:1.08rem;max-width:62ch}
+.gold{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font-weight:600;font-size:.97rem;text-decoration:none;border:1.5px solid var(--line);color:var(--text);background:transparent;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s,box-shadow .25s;font-family:var(--font-body)}
+.btn:hover{transform:translateY(-2px);border-color:var(--gold)}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:var(--on-gold);box-shadow:0 8px 30px -8px color-mix(in srgb,var(--gold) 70%,transparent)}
+.btn-gold:hover{box-shadow:0 14px 40px -8px color-mix(in srgb,var(--gold) 90%,transparent)}
+.btn .arr{transition:translate .25s}
+.btn:hover .arr{translate:4px 0}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+header.top.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:34px;height:34px}
+.brand b{font-family:var(--font-display);font-size:1.15rem;letter-spacing:.04em}
+.brand small{font-family:var(--font-display);font-size:.7rem;letter-spacing:.2em;color:var(--gold);display:block;line-height:1;margin-top:2px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--text-dim);font-size:.94rem;position:relative}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-4px;height:1.5px;width:100%;background:var(--gold);scale:0 1;transform-origin:left;transition:scale .3s}
+.nav-links a:not(.btn):hover{color:var(--text)}
+.nav-links a.btn-gold{color:var(--on-gold)}
+.nav-links a:not(.btn):hover::after{scale:1 1}
+.nav-links .new{font-family:var(--font-mono);font-size:.62rem;color:var(--on-gold);background:var(--gold);padding:1px 6px;border-radius:99px;margin-left:6px;vertical-align:2px}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:8px;cursor:pointer}
+@media(max-width:940px){
+  .nav-links{position:fixed;inset:70px 0 auto;flex-direction:column;align-items:stretch;gap:0;background:var(--bg-raised);border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));transform:translateY(-120%);transition:transform .35s cubic-bezier(.16,1,.3,1);margin-top:env(safe-area-inset-top,0px)}
+  .nav-links.open{transform:none}
+  .nav-links a{padding:14px 4px;border-bottom:1px solid var(--line)}
+  .nav-links a.btn{margin-top:14px;justify-content:center;border-bottom:1.5px solid var(--gold)}
+  .burger{display:inline-flex}
+}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding-block:clamp(56px,9vw,110px) clamp(48px,7vw,90px)}
+#net{position:absolute;inset:0;width:100%;height:100%;opacity:.75;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 20% 30%,color-mix(in srgb,var(--gold) 14%,transparent),transparent 70%),radial-gradient(50% 60% at 85% 80%,color-mix(in srgb,var(--teal) 16%,transparent),transparent 70%);pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero h1{font-size:clamp(2.6rem,7vw,5.2rem)}
+.hero h1 .w{display:inline-block;animation:rise .9s cubic-bezier(.16,1,.3,1) both}
+.hero h1 .wise{color:var(--gold);position:relative}
+.hero h1 .wise::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.09em;background:var(--gold);border-radius:4px;scale:0 1;transform-origin:left;animation:line 1s .9s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes rise{from{opacity:.2;translate:0 .5em;rotate:4deg}to{opacity:1;translate:0 0;rotate:0deg}}
+@keyframes line{to{scale:1 1}}
+.hero-lede{font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--text-dim);max-width:56ch}
+.hero-lede strong{color:var(--text);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--font-mono);font-size:.78rem;color:var(--text-faint)}
+.hero-meta span::before{content:"●";color:var(--teal);margin-right:8px;font-size:.6rem;vertical-align:2px}
+
+/* Hero visual: code → site */
+.hero-card{position:relative;background:var(--bg-raised);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 40px 90px -30px #000,0 0 0 1px color-mix(in srgb,var(--gold) 12%,transparent);animation:float 7s ease-in-out infinite;min-width:0}
+@keyframes float{50%{translate:0 -10px}}
+.chrome{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.chrome i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.chrome i:nth-child(1){background:#D96C5F}.chrome i:nth-child(2){background:var(--gold)}.chrome i:nth-child(3){background:var(--teal)}
+.url{flex:1;margin-left:8px;background:var(--bg);border-radius:99px;padding:5px 14px;font-family:var(--font-mono);font-size:.76rem;color:var(--text-dim);white-space:nowrap;overflow:hidden}
+.url .caret{color:var(--gold);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.mini{padding:18px;display:grid;gap:12px}
+.mini .bar{display:flex;justify-content:space-between;align-items:center}
+.mini .logo{width:84px;height:12px;border-radius:4px;background:var(--gold)}
+.mini .links{display:flex;gap:8px}.mini .links i{width:34px;height:8px;border-radius:4px;background:var(--line)}
+.mini .banner{height:120px;border-radius:12px;background:linear-gradient(120deg,var(--teal),var(--gold-dim));position:relative;overflow:hidden}
+.mini .banner::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);animation:shine 3.2s 1.2s infinite}
+@keyframes shine{from{translate:-100% 0}to{translate:100% 0}}
+.mini .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mini .cols i{height:64px;border-radius:10px;background:var(--bg-card);border:1px solid var(--line);animation:pop .7s cubic-bezier(.16,1,.3,1) both}
+.mini .cols i:nth-child(2){animation-delay:.15s}.mini .cols i:nth-child(3){animation-delay:.3s}
+@keyframes pop{from{scale:.85;opacity:.3}}
+.mini .pay{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:center;background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-family:var(--font-mono);font-size:.74rem;color:var(--text-dim)}
+.mini .pay b{color:var(--teal);font-weight:500}
+.hero-tag{justify-self:end;font-family:var(--font-mono);font-size:.7rem;background:var(--gold);color:var(--on-gold);padding:4px 10px;border-radius:99px}
+
+/* Ticker */
+.ticker{border-block:1px solid var(--line);background:var(--bg-raised);overflow:hidden;padding-block:16px}
+.ticker-track{display:flex;gap:44px;width:max-content;animation:scroll 38s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker span{font-family:var(--font-mono);font-size:.82rem;letter-spacing:.16em;color:var(--text-dim);white-space:nowrap;display:flex;align-items:center;gap:44px}
+.ticker span::after{content:"✦";color:var(--gold)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* Services bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.svc{position:relative;grid-column:span 3;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:14px;overflow:hidden;transition:border-color .3s,translate .4s cubic-bezier(.16,1,.3,1);min-width:0}
+.svc::before{content:"";position:absolute;inset:0;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--gold) 14%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.svc:hover{border-color:color-mix(in srgb,var(--gold) 55%,var(--line));translate:0 -4px}
+.svc:hover::before{opacity:1}
+.svc .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;color:var(--teal)}
+.svc h3{font-size:1.45rem}
+.svc p{color:var(--text-dim)}
+.svc ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;color:var(--text-dim);font-size:.95rem}
+.svc li{display:flex;gap:10px}
+.svc li::before{content:"→";color:var(--gold)}
+.svc.feature{grid-column:1/-1;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;padding:36px;background:linear-gradient(140deg,color-mix(in srgb,var(--gold) 16%,var(--bg-card)),var(--bg-card) 55%,color-mix(in srgb,var(--teal) 14%,var(--bg-card)));border-color:color-mix(in srgb,var(--gold) 60%,var(--line))}
+.svc.feature .k{color:var(--gold)}
+.svc.feature h3{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.svc.feature .fcol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.badge{align-self:flex-start;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.16em;background:var(--gold);color:var(--on-gold);padding:5px 12px;border-radius:99px;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--gold) 0%,transparent),0 0 24px color-mix(in srgb,var(--gold) 55%,transparent)}}
+.code{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:18px;font-family:var(--font-mono);font-size:.82rem;line-height:1.75;color:var(--text-dim);overflow-x:auto;white-space:pre;height:260px;align-self:center;min-width:0}
+.code .t{color:var(--gold)}.code .a{color:var(--teal)}.code .s{color:var(--text)}
+@media(max-width:860px){.svc,.svc.feature{grid-column:1/-1}.svc.feature{grid-template-columns:1fr}}
+
+/* Web studio */
+.studio{background:var(--bg-raised);border-block:1px solid var(--line)}
+.studio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.offer{background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0;transition:translate .35s cubic-bezier(.16,1,.3,1),border-color .3s}
+.offer:hover{translate:0 -4px;border-color:var(--teal)}
+.offer svg{width:38px;height:38px;color:var(--gold)}
+.offer h3{font-size:1.15rem}
+.offer p{color:var(--text-dim);font-size:.95rem}
+@media(max-width:980px){.studio-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.studio-grid{grid-template-columns:1fr}}
+.steps{margin-top:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;counter-reset:s}
+.steps::before{content:"";position:absolute;top:21px;left:22px;right:22px;height:2px;background:linear-gradient(90deg,var(--gold) var(--prog,0%),var(--line) var(--prog,0%))}
+.step{position:relative;display:flex;flex-direction:column;gap:10px;padding-right:20px;min-width:0}
+.step .dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid var(--gold);font-family:var(--font-mono);font-size:.85rem;color:var(--gold);position:relative;z-index:1}
+.step h3{font-size:1.1rem;margin-top:6px}
+.step p{color:var(--text-dim);font-size:.93rem}
+@media(max-width:780px){.steps{grid-template-columns:1fr;gap:26px}.steps::before{top:22px;bottom:22px;left:21px;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--gold) var(--prog,0%),var(--line) var(--prog,0%))}.step{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:4px 16px}.step .txt{flex:1;min-width:0}}
+.studio-cta{margin-top:50px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px}
+.studio-cta p{font-family:var(--font-display);font-size:1.3rem;font-weight:600}
+
+/* Showreel */
+.reel{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--bg-raised);aspect-ratio:16/9;max-width:100%;box-shadow:0 50px 100px -40px #000}
+.reel video{width:100%;height:100%;object-fit:cover;display:block}
+.reel .sound{position:absolute;right:14px;bottom:14px}
+
+/* Serve + engage */
+.two{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+.tile{background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tile .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;color:var(--teal)}
+.tile h3{font-size:1.3rem}
+.tile p{color:var(--text-dim)}
+.engage{margin-top:18px}
+.engage .tile{background:transparent}
+.engage .num{font-family:var(--font-display);font-size:2.6rem;color:var(--gold);line-height:1}
+
+/* Why */
+.why{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.why div{background:var(--bg);padding:30px;display:flex;flex-direction:column;gap:8px;transition:background .3s}
+.why div:hover{background:var(--bg-raised)}
+.why h3{font-size:1.2rem}
+.why p{color:var(--text-dim)}
+@media(max-width:700px){.why{grid-template-columns:1fr}}
+
+/* About */
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+@media(max-width:860px){.about{grid-template-columns:1fr;gap:28px}}
+.about .body{display:flex;flex-direction:column;gap:18px;color:var(--text-dim);font-size:1.05rem;max-width:62ch}
+.about .body strong{color:var(--text)}
+.products{display:flex;flex-wrap:wrap;gap:10px}
+.products a{font-family:var(--font-mono);font-size:.8rem;border:1px solid var(--line);border-radius:99px;padding:6px 14px;text-decoration:none;color:var(--text);transition:border-color .25s,background .25s}
+.products a:hover{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent)}
+.twi{font-family:var(--font-display);font-size:clamp(3rem,9vw,6.5rem);line-height:.95;color:var(--gold)}
+.twi small{display:block;font-family:var(--font-mono);font-size:.8rem;letter-spacing:.2em;color:var(--text-faint);margin-top:14px}
+
+/* Testimonials */
+.quotes{position:relative}
+.qtrack{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
+.q{flex:0 0 min(420px,86%);scroll-snap-align:start;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:16px}
+.q .k{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.2em;color:var(--gold)}
+.q blockquote{margin:0;font-size:1.04rem;color:var(--text)}
+.q cite{font-style:normal;color:var(--text-faint);font-size:.9rem;margin-top:auto}
+.qnav{display:flex;gap:10px;margin-top:16px}
+.qnav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;font-size:1.1rem}
+.qnav button:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px}
+@media(max-width:860px){.contact{grid-template-columns:1fr}}
+.ways{display:grid;gap:12px}
+.way{display:flex;align-items:center;gap:16px;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;min-width:0}
+.way svg{width:22px;height:22px;color:var(--gold);flex:none}
+.way .lbl{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.18em;color:var(--text-faint)}
+.way .val{font-weight:600;user-select:all;overflow-wrap:anywhere}
+.way .val a{text-decoration:none}
+.way .val a:hover{color:var(--gold)}
+form.card{background:var(--bg-raised);border:1px solid var(--line);border-radius:18px;padding:28px;display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:.85rem;color:var(--text-dim)}
+.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;color:var(--text);font-family:var(--font-body);font-size:15px;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:.88rem;color:var(--text-dim);transition:all .2s}
+.chips input:checked+span{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.chips input:focus-visible+span{outline:2px solid var(--gold);outline-offset:2px}
+.ct-success{background:var(--bg-raised);border:1px solid var(--teal);border-radius:18px;padding:28px;display:grid;gap:10px}
+.ct-success h3{font-size:1.4rem}
+.ct-success p{color:var(--text-dim)}
+.formnote{font-size:.88rem;color:var(--teal)}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding-block:56px 30px;background:var(--bg-raised)}
+.fgrid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:28px}
+@media(max-width:860px){.fgrid{grid-template-columns:1fr 1fr}}
+.fgrid h4{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;color:var(--text-faint);margin:0 0 12px;font-weight:500}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fgrid a{text-decoration:none;color:var(--text-dim);font-size:.93rem}
+.fgrid a:hover{color:var(--gold)}
+.fbase{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--text-faint);font-size:.85rem}
+
+/* WhatsApp float */
+.wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:56px;height:56px;border-radius:50%;background:var(--teal);display:grid;place-items:center;box-shadow:0 12px 30px -8px #000;transition:scale .25s}
+.wa:hover{scale:1.08}
+.wa::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--teal);animation:ring 2.4s infinite}
+@keyframes ring{to{scale:1.6;opacity:0}}
+.wa svg{width:28px;height:28px;color:#fff}
+
+/* Scroll reveal: content is visible by default; JS only animates items below the fold */
+.pre{opacity:0;translate:0 28px}
+.in{opacity:1;translate:0 0;transition:opacity .8s cubic-bezier(.16,1,.3,1),translate .8s cubic-bezier(.16,1,.3,1)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .pre{opacity:1;translate:none}
+  html{scroll-behavior:auto}
+  #net{display:none}
+}
+</style>
 </head>
 <body>
-
-<header class="site">
+<header class="top" id="top">
   <div class="wrap nav">
-    <a href="index.html" class="brand">
-      <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M 32 32
-                   C 32 21, 24 15, 18 20
-                   C 12 25, 15 34, 24 34
-                   C 29 34, 32 31, 32 32
-                   C 32 40, 40 47, 46 43"/>
-          <path d="M 32 32
-                   C 32 21, 40 15, 46 20
-                   C 52 25, 49 34, 40 34
-                   C 36.4 34, 33.6 32.6, 32.4 30.8
-                   M 30.2 33.6
-                   C 27 39, 20 45, 18 43"/>
-        </g>
-      </svg>
-      <span>NYANSATEK<small>Systems</small></span>
+    <a class="brand" href="index.html" aria-label="NYANSATEK Systems home">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round"><path d="M 32 32 C 32 21, 24 15, 18 20 C 12 25, 15 34, 24 34 C 29 34, 32 31, 32 32 C 32 40, 40 47, 46 43"/><path d="M 32 32 C 32 21, 40 15, 46 20 C 52 25, 49 34, 40 34 C 36.4 34, 33.6 32.6, 32.4 30.8 M 30.2 33.6 C 27 39, 20 45, 18 43"/></g></svg>
+      <span><b>NYANSATEK</b><small>SYSTEMS</small></span>
     </a>
-    <nav class="nav-links" id="nav-links">
-      <a href="index.html#services">Services</a>
-      <a href="index.html#serve">Who We Serve</a>
-      <a href="index.html#why">Why Us</a>
-      <a href="platform.html">Our Software</a>
-      <a href="index.html#contact">Contact</a>
-      <a href="signin.html">Customer sign-in</a>
-    </nav>
-    <a href="index.html#contact" class="btn btn-gold">Get in touch</a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-      <svg class="icon-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
+    <nav class="nav-links" id="navlinks">
+      <a href="#web">Web Design<span class="new">NEW</span></a>
+      <a href="#services">Services</a>
+      <a href="#serve">Who We Serve</a>
+      <a href="#why">Why Us</a>
+      <a href="platform.html">Our Software</a>
+      <a href="signin.html">Customer sign-in</a>
+      <a class="btn btn-gold" href="#contact">Get in touch</a>
+    </nav>
   </div>
 </header>
 
+<main>
 <section class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Nyansa — Twi for wisdom</span>
-      <h1>All your IT, <span class="accent">one wise partner.</span></h1>
-      <p class="lede">NYANSATEK is a single outsourced partner for hardware, software and infrastructure — one contract, one point of accountability, instead of managing five vendors.</p>
+    <div class="hero-copy">
+      <div class="eyebrow">Nyansa — Twi for wisdom</div>
+      <h1 aria-label="All your IT, one wise partner.">
+        <span class="w" style="animation-delay:.05s">All</span>
+        <span class="w" style="animation-delay:.12s">your</span>
+        <span class="w" style="animation-delay:.19s">IT,</span>
+        <span class="w" style="animation-delay:.26s">one</span>
+        <span class="w wise" style="animation-delay:.33s">wise</span>
+        <span class="w" style="animation-delay:.4s">partner.</span>
+      </h1>
+      <p class="hero-lede">One outsourced partner for <strong>websites</strong>, hardware, software and infrastructure. One contract and one point of accountability, instead of managing five vendors.</p>
       <div class="hero-cta">
-        <a href="#services" class="btn btn-gold">See what we do</a>
-        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <a class="btn btn-gold" href="#web">Get a website built <span class="arr">→</span></a>
+        <a class="btn" href="#services">See everything we do</a>
+      </div>
+      <div class="hero-meta">
+        <span>Built &amp; supported from Obuasi</span>
+        <span>Advisory first</span>
+        <span>SMEs · Enterprise · Government</span>
+      </div>
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <div class="chrome"><i></i><i></i><i></i><div class="url"><span id="typed"></span><span class="caret">|</span></div></div>
+      <div class="mini">
+        <div class="bar"><span class="logo"></span><span class="links"><i></i><i></i><i></i></span></div>
+        <div class="banner"></div>
+        <div class="cols"><i></i><i></i><i></i></div>
+        <div class="pay"><span>Checkout · Mobile Money</span><b>● Paid GH₵ 250.00</b></div>
+        <span class="hero-tag">Designed &amp; built by NYANSATEK</span>
       </div>
     </div>
   </div>
-  <div class="wrap trust-strip">
-    <span>One partner, every system</span>
-    <span>Hardware · Software · Infrastructure</span>
-    <span>Advisory first</span>
-    <span>Built &amp; supported from Obuasi</span>
-  </div>
 </section>
 
-<section id="services">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">What we do</span>
-      <h2>Three pillars. One accountable partner.</h2>
-      <p>Hand off as much — or as little — of your IT as you want. Every engagement runs on the same contract and the same point of contact.</p>
-    </div>
-    <div class="products-grid">
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>WEBSITE DESIGN &amp; DEVELOPMENT</span><span>HARDWARE PROCUREMENT</span><span>CUSTOM SOFTWARE</span><span>NETWORKS &amp; CLOUD</span><span>HELPDESK UNDER SLA</span><span>CYBERSECURITY</span><span>E-COMMERCE &amp; MOMO PAYMENTS</span><span>HOSTING &amp; DOMAINS</span>
+    <span>WEBSITE DESIGN &amp; DEVELOPMENT</span><span>HARDWARE PROCUREMENT</span><span>CUSTOM SOFTWARE</span><span>NETWORKS &amp; CLOUD</span><span>HELPDESK UNDER SLA</span><span>CYBERSECURITY</span><span>E-COMMERCE &amp; MOMO PAYMENTS</span><span>HOSTING &amp; DOMAINS</span>
+  </div>
+</div>
 
-      <div class="product-card">
-        <span class="product-tag">Hardware</span>
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">What we do</div>
+      <h2>Five pillars. One accountable partner.</h2>
+      <p>Hand off as much or as little of your IT as you want. Every engagement runs on the same contract and the same point of contact.</p>
+    </div>
+    <div class="bento">
+      <article class="svc feature reveal">
+        <div class="fcol">
+          <span class="badge">NEW · MAJOR SERVICE</span>
+          <div class="k">WEB</div>
+          <h3>Website Design &amp; Development</h3>
+          <p>Fast, mobile-first websites and web apps that win customers and run your business online. We design them, build them, host them and keep them running.</p>
+          <ul>
+            <li>Business &amp; corporate websites</li>
+            <li>E-commerce with Mobile Money &amp; card payments</li>
+            <li>Web apps, portals &amp; dashboards</li>
+            <li>Domains, hosting, SEO &amp; ongoing care</li>
+          </ul>
+          <a class="btn btn-gold" href="#web" style="align-self:flex-start">Explore web services <span class="arr">→</span></a>
+        </div>
+        <div class="code" id="code" aria-label="Example code"></div>
+      </article>
+      <article class="svc reveal">
+        <div class="k">HARDWARE</div>
         <h3>Procurement &amp; Equipment</h3>
-        <p class="desc">Sourcing, installation and ongoing asset management for the machines your business runs on.</p>
-        <ul class="product-feats">
-          <li>IT procurement &amp; sourcing</li>
-          <li>Installation and setup</li>
-          <li>Asset / inventory management</li>
-        </ul>
-      </div>
-
-      <div class="product-card">
-        <span class="product-tag">Software</span>
+        <p>Sourcing, installation and ongoing asset management for the machines your business runs on.</p>
+        <ul><li>IT procurement &amp; sourcing</li><li>Installation and setup</li><li>Asset / inventory management</li></ul>
+      </article>
+      <article class="svc reveal">
+        <div class="k">SOFTWARE</div>
         <h3>Development &amp; Integration</h3>
-        <p class="desc">Custom-built where you need it, licensed and managed where you don't.</p>
-        <ul class="product-feats">
-          <li>Custom software development</li>
-          <li>Software licensing &amp; procurement</li>
-          <li>Systems integration between existing tools</li>
-        </ul>
-      </div>
-
-      <div class="product-card">
-        <span class="product-tag">Infrastructure</span>
+        <p>Custom-built where you need it, licensed and managed where you don't.</p>
+        <ul><li>Custom software development</li><li>Software licensing &amp; procurement</li><li>Systems integration between existing tools</li></ul>
+      </article>
+      <article class="svc reveal">
+        <div class="k">INFRASTRUCTURE</div>
         <h3>Networks &amp; Cloud</h3>
-        <p class="desc">The backbone that everything else runs on — designed, built, and kept running.</p>
-        <ul class="product-feats">
-          <li>Network design, setup &amp; maintenance</li>
-          <li>Server &amp; data-center build-outs</li>
-          <li>Cloud migration &amp; management</li>
-        </ul>
-      </div>
-
-      <div class="product-card">
-        <span class="product-tag">Support &amp; Security</span>
+        <p>The backbone that everything else runs on, designed, built and kept running.</p>
+        <ul><li>Network design, setup &amp; maintenance</li><li>Server &amp; data-center build-outs</li><li>Cloud migration &amp; management</li></ul>
+      </article>
+      <article class="svc reveal">
+        <div class="k">SUPPORT &amp; SECURITY</div>
         <h3>Helpdesk &amp; Protection</h3>
-        <p class="desc">Sold alongside any of the above, so nothing is left unmonitored.</p>
-        <ul class="product-feats">
-          <li>Helpdesk / IT support under SLA</li>
-          <li>Cybersecurity assessment &amp; monitoring</li>
-          <li>Ongoing protection &amp; incident response</li>
-        </ul>
-      </div>
-
+        <p>Sold alongside any of the above, so nothing is left unmonitored.</p>
+        <ul><li>Helpdesk / IT support under SLA</li><li>Cybersecurity assessment &amp; monitoring</li><li>Ongoing protection &amp; incident response</li></ul>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="serve">
+<section class="section studio" id="web">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Who we serve</span>
-      <h2>SMEs, enterprises, and government — sold to differently.</h2>
+    <div class="section-head reveal">
+      <div class="eyebrow">Website Design &amp; Development</div>
+      <h2>Your business, <span class="gold">open online 24/7.</span></h2>
+      <p>We build websites the way we build our own NYANSATEK POS, School and Gold platforms: designed around how your customers actually use them, and supported after launch by the same team.</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <h4>🏪 SMEs</h4>
-        <p>Outsourced IT at a flat, predictable monthly cost — without hiring an in-house team.</p>
+    <div class="studio-grid">
+      <div class="offer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
+        <h3>Business websites</h3>
+        <p>Clean, professional sites for shops, schools, churches, clinics and firms. Easy to update yourself.</p>
       </div>
-      <div class="feat">
-        <h4>🏢 Enterprises</h4>
-        <p>Project and retainer work that consolidates vendors and extends your existing team.</p>
+      <div class="offer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg>
+        <h3>E-commerce</h3>
+        <p>Online stores that take Mobile Money and card payments, with orders, stock and SMS receipts.</p>
       </div>
-      <div class="feat">
-        <h4>🏛️ Government</h4>
-        <p>Compliant, tender-ready infrastructure partners for public institutions.</p>
+      <div class="offer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+        <h3>Web apps &amp; portals</h3>
+        <p>Customer portals, booking systems, staff dashboards and internal tools built for your workflow.</p>
       </div>
+      <div class="offer reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3>Hosting &amp; care</h3>
+        <p>Domains, secure hosting, backups, SEO and monthly updates, so your site stays fast and found.</p>
+      </div>
+    </div>
+
+    <div class="steps" id="steps">
+      <div class="step reveal"><span class="dot">1</span><div class="txt"><h3>Discover</h3><p>We learn your business, customers and goals before proposing anything.</p></div></div>
+      <div class="step reveal"><span class="dot">2</span><div class="txt"><h3>Design</h3><p>You see and approve the look on desktop and phone before we build.</p></div></div>
+      <div class="step reveal"><span class="dot">3</span><div class="txt"><h3>Build</h3><p>Fast, secure, mobile-first code, tested on the phones your customers use.</p></div></div>
+      <div class="step reveal"><span class="dot">4</span><div class="txt"><h3>Launch &amp; care</h3><p>We go live, train your team, and keep the site updated and monitored.</p></div></div>
+    </div>
+
+    <div class="studio-cta reveal">
+      <p>Ready for a website that works as hard as you do?</p>
+      <a class="btn btn-gold" href="#contact" data-need="Website">Start my website project <span class="arr">→</span></a>
     </div>
   </div>
 </section>
 
-<section id="work">
+<section class="section" id="reel">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">How we work</span>
-      <h2>Three ways to engage us.</h2>
+    <div class="section-head reveal">
+      <div class="eyebrow">NYANSATEK in 20 seconds</div>
+      <h2>See what one wise partner looks like.</h2>
     </div>
-    <div class="steps">
-      <div class="step">
-        <span class="num">01</span>
-        <h4>One-off Projects</h4>
-        <p>A migration, a buildout, a single infrastructure upgrade — scoped, delivered, done.</p>
-      </div>
-      <div class="step">
-        <span class="num">02</span>
-        <h4>Managed Retainers</h4>
-        <p>Ongoing support and maintenance under an SLA, alongside your existing team.</p>
-      </div>
-      <div class="step">
-        <span class="num">03</span>
-        <h4>Full Outsourcing</h4>
-        <p>NYANSATEK becomes your entire IT department — hardware, software, infrastructure.</p>
-      </div>
+    <div class="reel reveal">
+      <video id="reelvid" src="assets/nyansatek-showreel.mp4" poster="assets/showreel-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="NYANSATEK showreel: logo, tagline, five service pillars, website design spotlight and contact details"></video>
+      <button class="btn sound" id="playpause" type="button" aria-pressed="false">Pause</button>
     </div>
   </div>
 </section>
 
-<section id="why">
+<section class="section" id="serve" style="padding-top:0">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Why NYANSATEK</span>
+    <div class="section-head reveal">
+      <div class="eyebrow">Who we serve</div>
+      <h2>SMEs, enterprises and government, each served differently.</h2>
+    </div>
+    <div class="two">
+      <div class="tile reveal"><div class="k">SMEs</div><h3>Flat, predictable monthly cost</h3><p>Outsourced IT and a professional website without hiring an in-house team.</p></div>
+      <div class="tile reveal"><div class="k">ENTERPRISES</div><h3>Fewer vendors, more capacity</h3><p>Project and retainer work that consolidates vendors and extends your existing team.</p></div>
+      <div class="tile reveal"><div class="k">GOVERNMENT</div><h3>Tender-ready and compliant</h3><p>Compliant infrastructure and web partners for public institutions.</p></div>
+    </div>
+    <div class="two engage">
+      <div class="tile reveal"><span class="num">01</span><h3>One-off projects</h3><p>A new website, a migration, a buildout or a single upgrade. Scoped, delivered, done.</p></div>
+      <div class="tile reveal"><span class="num">02</span><h3>Managed retainers</h3><p>Ongoing support, site care and maintenance under an SLA, alongside your existing team.</p></div>
+      <div class="tile reveal"><span class="num">03</span><h3>Full outsourcing</h3><p>NYANSATEK becomes your entire IT department: web, hardware, software, infrastructure.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Why NYANSATEK</div>
       <h2>Built here, priced for here, accountable to you.</h2>
     </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <h4>🤝 One partner, not three vendors</h4>
-        <p>Single contract, single point of accountability — no finger-pointing when something breaks.</p>
-      </div>
-      <div class="feat">
-        <h4>🧭 Advisory first</h4>
-        <p>We start with what you need, not what we sell.</p>
-      </div>
-      <div class="feat">
-        <h4>📈 Scales with you</h4>
-        <p>A lean retainer for an SME, a full project team and SLA for an enterprise or government contract.</p>
-      </div>
-      <div class="feat">
-        <h4>🇬🇭 Rooted, not generic</h4>
-        <p>Built and supported from Obuasi — an identity that's distinctly ours.</p>
-      </div>
+    <div class="why reveal">
+      <div><h3>One partner, not five vendors</h3><p>Single contract, single point of accountability. No finger-pointing when something breaks.</p></div>
+      <div><h3>Advisory first</h3><p>We start with what you need, not what we sell.</p></div>
+      <div><h3>Scales with you</h3><p>A lean retainer for an SME, or a full project team and SLA for an enterprise or government contract.</p></div>
+      <div><h3>Rooted, not generic</h3><p>Built and supported from Obuasi, with an identity that is distinctly ours.</p></div>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="wrap wrap-prose">
-    <div class="section-head">
-      <span class="eyebrow">About us</span>
-      <h2>The same NYANSATEK, a wider focus.</h2>
-    </div>
-    <div class="prose" style="max-width:760px;margin:0;padding:0;">
-      <p>NYANSATEK is a Ghanaian business based in Obuasi, Ashanti Region. We build and run our own software products — <a href="platform.html">NYANSATEK POS, School, and Gold</a> are all live, in active use, and not going anywhere.</p>
-      <p>This page is about the other half of what we do: taking on a client's IT entirely — hardware, software, infrastructure — as an outsourced partner, the same way we've built and supported our own systems. Refocusing doesn't mean stepping away from the software; it means offering the same judgment and hands-on support to businesses, enterprises, and government bodies who need it.</p>
-      <p>The name comes from <em>nyansa</em>, the Twi word for wisdom — the idea that good IT work is about judgment, not just delivery.</p>
-      <p>NYANSATEK is founder-led: Robert Ofori-Boahene leads the business and is directly reachable on the number below.</p>
-      <p>Reach us at <a href="tel:0536340578">0536 340 578</a> or <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>.</p>
+<section class="section" id="about" style="padding-top:0">
+  <div class="wrap about">
+    <div class="twi reveal">nyansa<small>TWI · /ɲã.sa/ · WISDOM</small></div>
+    <div class="body reveal">
+      <div class="eyebrow">About us</div>
+      <p><strong>NYANSATEK is a Ghanaian business based in Obuasi, Ashanti Region.</strong> We build and run our own software products. NYANSATEK POS, School and Gold are all live, in active use, and not going anywhere.</p>
+      <p>We also take on a client's IT entirely, from websites to hardware, software and infrastructure, as an outsourced partner, the same way we've built and supported our own systems.</p>
+      <p>The name comes from <em>nyansa</em>, the Twi word for wisdom: good IT work is about judgment, not just delivery. NYANSATEK is founder-led. Robert Ofori-Boahene leads the business and is directly reachable on <strong>0536 340 578</strong>.</p>
+      <div class="products"><a href="platform.html">NYANSATEK POS</a><a href="platform.html">NYANSATEK School</a><a href="platform.html">NYANSATEK Gold</a></div>
     </div>
   </div>
 </section>
 
-<section id="clients">
+<section class="section quotes" id="trust" style="padding-top:0">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Trusted in Obuasi</span>
+    <div class="section-head reveal">
+      <div class="eyebrow">Trusted in Obuasi</div>
       <h2>Businesses that run on NYANSATEK.</h2>
     </div>
-    <div class="quote-grid">
-      <figure class="quote">
-        <span class="product-tag">NYANSATEK POS</span>
-        <blockquote><p>&ldquo;I am very grateful to NYANSATEK POS for making my business run smoothly. The SME Ledger makes it very easy for me to see how my business is doing.&rdquo;</p></blockquote>
-        <figcaption><strong>Rita Osei</strong> &middot; RITPACK Supermarket, Obuasi</figcaption>
-      </figure>
-      <figure class="quote">
-        <span class="product-tag">NYANSATEK POS</span>
-        <blockquote><p>&ldquo;The fact that we can send receipts as an SMS directly to a customer&rsquo;s phone, in the same format as the paper receipt, is mind-blowing.&rdquo;</p></blockquote>
-        <figcaption><strong>Jamal</strong> &middot; Insha Allah Rabee Ent, Obuasi</figcaption>
-      </figure>
-      <figure class="quote">
-        <span class="product-tag">NYANSATEK School</span>
-        <blockquote><p>&ldquo;We really used to struggle with attendance and fees collection, but NYANSATEK School has taken away all the headache.&rdquo;</p></blockquote>
-        <figcaption>Chief Montessori, Obuasi</figcaption>
-      </figure>
-      <figure class="quote">
-        <span class="product-tag">NYANSATEK School</span>
-        <blockquote><p>&ldquo;Thanks to NYANSATEK School, we no longer need a pile of notebooks for attendance. Our parents are very happy that they get a notification on their phone when their ward enters or leaves the school, and they also see the child&rsquo;s performance on their portal.&rdquo;</p></blockquote>
-        <figcaption>Greenwood Montessori, Obuasi</figcaption>
-      </figure>
-      <figure class="quote">
-        <span class="product-tag">NYANSATEK Gold</span>
-        <blockquote><p>&ldquo;20 years of gold dealership and it&rsquo;s never been this easy. I can now see my previous activities and performance with no sweat, and the live gold market together with the forex exchange rate are exceptionally helpful.&rdquo;</p></blockquote>
-        <figcaption>Kekika Refinery, Obuasi</figcaption>
-      </figure>
+    <div class="qtrack" id="qtrack" tabindex="0" aria-label="Customer testimonials">
+      <figure class="q"><div class="k">NYANSATEK POS</div><blockquote>“I am very grateful to NYANSATEK POS for making my business run smoothly. The SME Ledger makes it very easy for me to see how my business is doing.”</blockquote><cite>Rita Osei · RITPACK Supermarket, Obuasi</cite></figure>
+      <figure class="q"><div class="k">NYANSATEK POS</div><blockquote>“The fact that we can send receipts as an SMS directly to a customer’s phone, in the same format as the paper receipt, is mind-blowing.”</blockquote><cite>Jamal · Insha Allah Rabee Ent, Obuasi</cite></figure>
+      <figure class="q"><div class="k">NYANSATEK SCHOOL</div><blockquote>“We really used to struggle with attendance and fees collection, but NYANSATEK School has taken away all the headache.”</blockquote><cite>Chief Montessori, Obuasi</cite></figure>
+      <figure class="q"><div class="k">NYANSATEK SCHOOL</div><blockquote>“Thanks to NYANSATEK School, we no longer need a pile of notebooks for attendance. Our parents are very happy that they get a notification on their phone when their ward enters or leaves the school, and they also see the child’s performance on their portal.”</blockquote><cite>Greenwood Montessori, Obuasi</cite></figure>
+      <figure class="q"><div class="k">NYANSATEK GOLD</div><blockquote>“20 years of gold dealership and it’s never been this easy. I can now see my previous activities and performance with no sweat, and the live gold market together with the forex exchange rate are exceptionally helpful.”</blockquote><cite>Kekika Refinery, Obuasi</cite></figure>
     </div>
+    <div class="qnav"><button type="button" id="qprev" aria-label="Previous testimonial">←</button><button type="button" id="qnext" aria-label="Next testimonial">→</button></div>
   </div>
 </section>
 
-<section id="contact">
+<section class="section" id="contact" style="padding-top:0">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Get in touch</span>
-      <h2>Let's talk about your IT.</h2>
-      <p>Call, email, or write to us — a real person reads and answers every message.</p>
+    <div class="section-head reveal">
+      <div class="eyebrow">Get in touch</div>
+      <h2>Let's talk about your website and IT.</h2>
+      <p>Call, email or write to us. A real person reads and answers every message.</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <h4>📞 Phone</h4>
-        <p><a href="tel:0536340578" style="color:var(--gold);">0536 340 578</a></p>
+    <div class="contact">
+      <div class="ways reveal">
+        <div class="way"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><div><div class="lbl">PHONE</div><div class="val"><a href="tel:0536340578">0536 340 578</a></div></div></div>
+        <div class="way"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><div><div class="lbl">EMAIL</div><div class="val"><a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a></div></div></div>
+        <div class="way"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/></svg><div><div class="lbl">WHATSAPP</div><div class="val"><a href="https://wa.me/233536340578" target="_blank" rel="noopener">Message us on WhatsApp</a></div></div></div>
+        <div class="way"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div><div class="lbl">ADDRESS</div><div class="val">P.O. Box 10, Obuasi, Ashanti Region, Ghana</div></div></div>
       </div>
-      <div class="feat">
-        <h4>✉️ Email</h4>
-        <p><a href="mailto:support@nyansatek.systems" style="color:var(--gold);">support@nyansatek.systems</a></p>
-      </div>
-      <div class="feat">
-        <h4>💬 WhatsApp</h4>
-        <p><a href="https://wa.me/233536340578" target="_blank" rel="noopener" style="color:var(--gold);">Message us on WhatsApp</a></p>
-      </div>
-      <div class="feat">
-        <h4>📍 Address</h4>
-        <p>P.O. Box 10, Obuasi, Ashanti Region, Ghana</p>
-      </div>
-    </div>
-
-    <div style="max-width:560px;margin-top:40px;">
-      <h3 style="margin-bottom:14px;">Or send us a message</h3>
-      <div id="ct-success" class="status-success" style="display:none;">Thank you — your message has been sent. We'll get back to you shortly.</div>
-      <div id="ct-error" class="status-msg error"></div>
-      <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form class="card reveal" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact">
-        <p style="display:none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
-        <div class="field-row">
-          <div class="field">
-            <label for="ct-name">Your name</label>
-            <input type="text" id="ct-name" name="name" required>
-          </div>
-          <div class="field">
-            <label for="ct-org">Business / organisation</label>
-            <input type="text" id="ct-org" name="organisation">
-          </div>
-        </div>
+        <p hidden><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
         <div class="field">
-          <label for="ct-contact">Email or phone</label>
-          <input type="text" id="ct-contact" name="contact" required>
+          <label>What do you need?</label>
+          <div class="chips" role="group" aria-label="Service needed">
+            <label><input type="checkbox" name="service" value="Website" id="svc-web"><span>Website</span></label>
+            <label><input type="checkbox" name="service" value="Hardware" id="svc-hw"><span>Hardware</span></label>
+            <label><input type="checkbox" name="service" value="Software" id="svc-sw"><span>Software</span></label>
+            <label><input type="checkbox" name="service" value="Infrastructure" id="svc-inf"><span>Infrastructure</span></label>
+            <label><input type="checkbox" name="service" value="Support & Security" id="svc-sec"><span>Support &amp; Security</span></label>
+          </div>
         </div>
-        <div class="field">
-          <label for="ct-message">What do you need help with?</label>
-          <textarea id="ct-message" name="message" rows="5" required
-            style="width:100%;background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;color:var(--text);font-family:var(--font-body);font-size:15px;resize:vertical;"
-            placeholder="Tell us a little about your business and what you're looking for."></textarea>
+        <div class="row">
+          <div class="field"><label for="ct-name">Your name</label><input type="text" id="ct-name" name="name" required></div>
+          <div class="field"><label for="ct-org">Business / organisation</label><input type="text" id="ct-org" name="organisation"></div>
         </div>
-        <button type="submit" class="btn btn-gold btn-block" id="ct-submit">Send message</button>
+        <div class="field"><label for="ct-contact">Email or phone</label><input type="text" id="ct-contact" name="contact" required></div>
+        <div class="field"><label for="ct-message">Tell us a little more</label><textarea id="ct-message" name="message" rows="5" required placeholder="Tell us a little about your business and what you're looking for."></textarea></div>
+        <button type="submit" class="btn btn-gold" id="ct-submit" style="justify-content:center">Send message <span class="arr">→</span></button>
+        <p class="formnote" id="ct-error" role="alert" hidden></p>
       </form>
+      <div class="card ct-success" id="ct-success" hidden>
+        <h3>Thank you — message received.</h3>
+        <p>A real person at NYANSATEK will get back to you shortly. For anything urgent, call 0536 340 578.</p>
+      </div>
     </div>
   </div>
 </section>
+</main>
 
-<footer class="site">
+<footer>
   <div class="wrap">
-    <div class="footer-grid">
-      <div class="brand">
-        <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M 32 32
-                     C 32 21, 24 15, 18 20
-                     C 12 25, 15 34, 24 34
-                     C 29 34, 32 31, 32 32
-                     C 32 40, 40 47, 46 43"/>
-            <path d="M 32 32
-                     C 32 21, 40 15, 46 20
-                     C 52 25, 49 34, 40 34
-                     C 36.4 34, 33.6 32.6, 32.4 30.8
-                     M 30.2 33.6
-                     C 27 39, 20 45, 18 43"/>
-          </g>
-        </svg>
-        <span style="color:var(--text)">NYANSATEK<small>Systems</small></span>
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="index.html"><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><g fill="none" stroke="#D9A833" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round"><path d="M 32 32 C 32 21, 24 15, 18 20 C 12 25, 15 34, 24 34 C 29 34, 32 31, 32 32 C 32 40, 40 47, 46 43"/><path d="M 32 32 C 32 21, 40 15, 46 20 C 52 25, 49 34, 40 34 C 36.4 34, 33.6 32.6, 32.4 30.8 M 30.2 33.6 C 27 39, 20 45, 18 43"/></g></svg><span><b>NYANSATEK</b><small>SYSTEMS</small></span></a>
+        <p style="color:var(--text-faint);font-size:.9rem;margin-top:14px;max-width:30ch">All your IT, one wise partner. Obuasi, Ghana.</p>
       </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h5>Services</h5>
-          <a href="index.html#services">Hardware</a>
-          <a href="index.html#services">Software</a>
-          <a href="index.html#services">Infrastructure</a>
-          <a href="index.html#services">Support &amp; Security</a>
-        </div>
-        <div class="footer-col">
-          <h5>Company</h5>
-          <a href="index.html#about">About</a>
-          <a href="platform.html">Our Software</a>
-          <a href="index.html#contact">Contact</a>
-          <a href="careers.html">Join Our Team</a>
-        </div>
-        <div class="footer-col">
-          <h5>Legal</h5>
-          <a href="terms.html">Terms of Service</a>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="legal.html">Legal information</a>
-        </div>
-        <div class="footer-col">
-          <h5>Support</h5>
-          <a href="tel:0536340578">0536 340 578</a>
-          <a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a>
-        </div>
-      </div>
+      <div><h4>SERVICES</h4><ul><li><a href="#web">Website Design &amp; Development</a></li><li><a href="#services">Hardware</a></li><li><a href="#services">Software</a></li><li><a href="#services">Infrastructure</a></li><li><a href="#services">Support &amp; Security</a></li></ul></div>
+      <div><h4>COMPANY</h4><ul><li><a href="#about">About</a></li><li><a href="platform.html">Our Software</a></li><li><a href="#contact">Contact</a></li><li><a href="careers.html">Join Our Team</a></li></ul></div>
+      <div><h4>LEGAL</h4><ul><li><a href="terms.html">Terms of Service</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="legal.html">Legal information</a></li></ul></div>
+      <div><h4>SUPPORT</h4><ul><li><a href="tel:0536340578">0536 340 578</a></li><li><a href="mailto:support@nyansatek.systems">support@nyansatek.systems</a></li><li><a href="portal.html">Team Portal</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 NYANSATEK Systems. All rights reserved.</span>
-      <span>Obuasi, Ghana</span>
-      <a href="portal.html" style="color:var(--text-faint);font-size:12px;">Team Portal</a>
-    </div>
+    <div class="fbase"><span>© 2026 NYANSATEK Systems. All rights reserved.</span><span>Obuasi, Ghana</span></div>
   </div>
 </footer>
 
+<a class="wa" href="https://wa.me/233536340578" target="_blank" rel="noopener" aria-label="Chat with NYANSATEK on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
 <script>
-// Mobile nav toggle
-(function () {
-  const toggle = document.getElementById('nav-toggle');
-  const links = document.getElementById('nav-links');
-  if (!toggle || !links) return;
-  function closeMenu() {
-    links.classList.remove('open');
-    toggle.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Header + menu
+  var header=document.getElementById('top'), burger=document.getElementById('burger'), links=document.getElementById('navlinks');
+  addEventListener('scroll',function(){header.classList.toggle('scrolled',scrollY>10)},{passive:true});
+  burger.addEventListener('click',function(){var o=links.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+  links.addEventListener('click',function(e){if(e.target.closest('a'))links.classList.remove('open')});
+
+  // Typed URL in hero card
+  var urls=['yourbusiness.com.gh','shop.yourbrand.gh','portal.yourschool.edu.gh'], ui=0, ci=0, del=false, typed=document.getElementById('typed');
+  function tick(){var u=urls[ui];typed.textContent=u.slice(0,ci);
+    if(!del&&ci<u.length){ci++;setTimeout(tick,70)}else if(!del){del=true;setTimeout(tick,1800)}
+    else if(ci>0){ci--;setTimeout(tick,30)}else{del=false;ui=(ui+1)%urls.length;setTimeout(tick,300)}}
+  if(reduce){typed.textContent=urls[0]}else tick();
+
+  // Code typing in feature card
+  var codeLines=[
+    '<span class="t">&lt;section</span> <span class="a">class</span>=<span class="s">"hero"</span><span class="t">&gt;</span>',
+    '  <span class="t">&lt;h1&gt;</span><span class="s">Welcome to your business</span><span class="t">&lt;/h1&gt;</span>',
+    '  <span class="t">&lt;Checkout</span> <span class="a">pay</span>=<span class="s">"momo"</span> <span class="t">/&gt;</span>',
+    '  <span class="t">&lt;Booking</span> <span class="a">sms</span>=<span class="s">{true}</span> <span class="t">/&gt;</span>',
+    '<span class="t">&lt;/section&gt;</span>',
+    '',
+    '<span class="a">// mobile-first · fast · secure</span>',
+    '<span class="a">// hosted &amp; cared for by NYANSATEK</span>'];
+  var code=document.getElementById('code');
+  function plain(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent}
+  if(reduce){code.innerHTML=codeLines.join('\n')}else{
+    var li=0,ch=0;
+    (function step(){
+      if(li>=codeLines.length){setTimeout(function(){li=0;ch=0;step()},4000);return}
+      var txt=plain(codeLines[li]);
+      if(ch<=txt.length){
+        var done=codeLines.slice(0,li).join('\n');
+        code.innerHTML=(done?done+'\n':'')+escapeHtml(txt.slice(0,ch))+'<span class="caret" style="color:var(--gold)">▋</span>';
+        ch++;setTimeout(step,28)
+      }else{li++;ch=0;setTimeout(step,120)}
+    })();
   }
-  toggle.addEventListener('click', () => {
-    const isOpen = links.classList.toggle('open');
-    toggle.classList.toggle('open', isOpen);
-    toggle.setAttribute('aria-expanded', String(isOpen));
+  function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+  // Spotlight on cards
+  document.querySelectorAll('.svc').forEach(function(c){c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+
+  // Scroll reveal (only for items below the first screen)
+  if(!reduce&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');e.target.classList.remove('pre');io.unobserve(e.target)}})},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el,i){
+      if(el.getBoundingClientRect().top>innerHeight*0.95){el.classList.add('pre');el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)}
+    });
+  }
+
+  // Process line progress
+  var steps=document.getElementById('steps');
+  function prog(){var r=steps.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*0.8-r.top)/(r.height+innerHeight*0.3)));steps.style.setProperty('--prog',(p*100)+'%')}
+  addEventListener('scroll',prog,{passive:true});prog();
+
+  // Showreel play/pause
+  var v=document.getElementById('reelvid'),pp=document.getElementById('playpause');
+  if(reduce){v.removeAttribute('autoplay');v.pause();pp.textContent='Play'}
+  pp.addEventListener('click',function(){if(v.paused){v.play();pp.textContent='Pause';pp.setAttribute('aria-pressed','false')}else{v.pause();pp.textContent='Play';pp.setAttribute('aria-pressed','true')}});
+
+  // Testimonials
+  var qt=document.getElementById('qtrack');
+  function qs(d){qt.scrollBy({left:d*(qt.querySelector('.q').offsetWidth+18),behavior:'smooth'})}
+  document.getElementById('qprev').onclick=function(){qs(-1)};
+  document.getElementById('qnext').onclick=function(){qs(1)};
+
+  // "Start my website project" pre-selects Website
+  document.querySelectorAll('[data-need]').forEach(function(a){a.addEventListener('click',function(){var c=document.getElementById('svc-web');if(c)c.checked=true})});
+
+  // Enquiry form -> Netlify Forms (AJAX, same approach as /platform)
+  var form=document.getElementById('contact-form'),okBox=document.getElementById('ct-success'),err=document.getElementById('ct-error'),btn=document.getElementById('ct-submit');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();err.hidden=true;btn.disabled=true;var label=btn.innerHTML;btn.textContent='Sending...';
+    var body=Array.from(new FormData(form)).map(function(kv){return encodeURIComponent(kv[0])+'='+encodeURIComponent(kv[1])}).join('&');
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+      .then(function(r){if(!r.ok)throw new Error('fail');form.hidden=true;okBox.hidden=false})
+      .catch(function(){err.textContent='Something went wrong sending that. Please call 0536 340 578 or email support@nyansatek.systems.';err.hidden=false;err.style.color='#D96C5F'})
+      .finally(function(){btn.disabled=false;btn.innerHTML=label});
   });
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+
+  // Hero network canvas
+  var cv=document.getElementById('net');
+  if(!reduce&&cv.getContext){
+    var ctx=cv.getContext('2d'),pts=[],W,H,dpr=Math.min(2,devicePixelRatio||1),mouse={x:-999,y:-999};
+    function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      var n=Math.round(Math.min(80,W*H/16000));pts=[];for(var i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,g:Math.random()<.25})}
+    size();addEventListener('resize',size);
+    cv.parentElement.addEventListener('pointermove',function(e){var r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top});
+    cv.parentElement.addEventListener('pointerleave',function(){mouse.x=mouse.y=-999});
+    (function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+        var dx=p.x-mouse.x,dy=p.y-mouse.y,dm=Math.hypot(dx,dy);if(dm<120){p.x+=dx/dm*.8;p.y+=dy/dm*.8}
+        for(var j=i+1;j<pts.length;j++){var q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<130){ctx.strokeStyle='rgba(62,144,136,'+(1-d/130)*.35+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}
+        ctx.fillStyle=p.g?'rgba(227,165,76,.9)':'rgba(166,175,196,.55)';ctx.beginPath();ctx.arc(p.x,p.y,p.g?2.2:1.5,0,7);ctx.fill()}
+      requestAnimationFrame(draw)})();
+  }
 })();
 </script>
-
-<script>
-// Enquiry form -> Netlify Forms (same approach as the feedback form on /platform).
-(function () {
-  var form = document.getElementById('contact-form');
-  if (!form) return;
-  var ok = document.getElementById('ct-success');
-  var err = document.getElementById('ct-error');
-  var btn = document.getElementById('ct-submit');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    err.classList.remove('show');
-    btn.disabled = true; btn.innerText = 'Sending...';
-    var body = Array.from(new FormData(form)).map(function (kv) {
-      return encodeURIComponent(kv[0]) + '=' + encodeURIComponent(kv[1]);
-    }).join('&');
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
-      .then(function (res) {
-        if (!res.ok) throw new Error('Submission failed');
-        form.style.display = 'none'; ok.style.display = 'block';
-      })
-      .catch(function () {
-        err.innerText = 'Something went wrong sending that — please call 0536 340 578 or email support@nyansatek.systems.';
-        err.classList.add('show');
-      })
-      .finally(function () { btn.disabled = false; btn.innerText = 'Send message'; });
-  });
-})();
-</script>
-
 </body>
 </html>
