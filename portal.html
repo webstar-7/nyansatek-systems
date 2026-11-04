@@ -135,21 +135,38 @@ document.getElementById('login-form').addEventListener('submit', async e => {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
 
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    errEl.innerText = 'Email or password is incorrect.';
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      errEl.innerText = 'Email or password is incorrect.';
+      errEl.classList.add('show');
+      return;
+    }
+    accessToken = data.session.access_token;
+    await loadDashboard();
+  } catch (err) {
+    errEl.innerText = 'Could not reach the server. Check your internet connection and try again.';
     errEl.classList.add('show');
-    btn.disabled = false; btn.innerText = 'Sign In';
-    return;
+  } finally {
+    // always give the button back, whether sign-in worked, failed or the connection dropped
+    resetLoginButton();
   }
-  accessToken = data.session.access_token;
-  await loadDashboard();
 });
 
+function resetLoginButton() {
+  const btn = document.getElementById('login-submit');
+  btn.disabled = false; btn.innerText = 'Sign In';
+}
+
 async function logout() {
-  await sb.auth.signOut();
+  try { await sb.auth.signOut(); } catch (e) { /* offline: still clear this screen */ }
   accessToken = null;
+  dashData = null;
   resetResourcesTab();
+  document.getElementById('dash-content').innerHTML = '<div class="es">Loading...</div>';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').classList.remove('show');
+  resetLoginButton();
   document.getElementById('portal-wrap').style.display = 'none';
   document.getElementById('login-wrap').style.display = 'block';
 }
@@ -162,6 +179,7 @@ async function loadDashboard() {
     return;
   }
   dashData = data;
+  document.getElementById('login-password').value = '';
   document.getElementById('login-wrap').style.display = 'none';
   document.getElementById('portal-wrap').style.display = 'block';
   document.getElementById('welcome-name').innerText = data.agent.full_name;
