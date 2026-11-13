@@ -7,14 +7,14 @@
    caller's identity is established server-side.
    ============================================================ */
 
-const { getJobsClient } = require("./_supabase");
+const { getAgentsClient } = require("./_supabase");
 const { getAuthenticatedAgent } = require("./_lib/agent-auth");
 
 exports.handler = async (event) => {
   const { agent, error } = await getAuthenticatedAgent(event);
   if (error) return { statusCode: 401, body: JSON.stringify({ error }) };
 
-  const jobsDb = getJobsClient();
+  const jobsDb = getAgentsClient();
 
   try {
     if (agent.role === "sales_rep") {

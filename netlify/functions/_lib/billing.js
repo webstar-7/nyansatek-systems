@@ -16,6 +16,7 @@
    ============================================================ */
 
 const PAYSTACK_BASE = "https://api.paystack.co";
+const { getAgentsClient } = require("../_supabase");
 
 function paystackHeaders() {
   return {
@@ -78,8 +79,9 @@ async function chargeMomo({ email, amountPesewas, phone, provider, reference }) 
 // ---- Commission generation: rep gets their %, their manager (if any) ----
 // ---- gets their own separate override % -- same reference, two rows, ----
 // ---- made possible by the (agent_id, reference) composite unique key. ----
-async function generateCommissions(jobsDb, { tenantProduct, tenantId, agentId, reference, plan, amountPaidGHS, eventType }) {
+async function generateCommissions(_jobsDb, { tenantProduct, tenantId, agentId, reference, plan, amountPaidGHS, eventType }) {
   if (!agentId) return; // no sales code was ever linked to this tenant -- nothing to attribute
+  const jobsDb = getAgentsClient(); // agents + commissions live in nyansatek-misc (first arg kept for callers)
 
   const { data: rep } = await jobsDb.from("sales_agents").select("*").eq("id", agentId).maybeSingle();
   if (!rep || !rep.is_active) return;

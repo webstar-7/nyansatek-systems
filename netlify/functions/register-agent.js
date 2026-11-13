@@ -16,7 +16,7 @@
    CORS handling needed here, unlike renew/upgrade-subscription.js.
    ============================================================ */
 
-const { getJobsClient } = require("./_supabase");
+const { getAgentsClient } = require("./_supabase");
 
 const REGION_CODES = {
   Ahafo: "AH", Ashanti: "AS", Bono: "BO", "Bono East": "BE", Central: "CE",
@@ -54,7 +54,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Password must be at least 8 characters" }) };
   }
 
-  const jobsDb = getJobsClient(); // sales_agents lives in the POS project regardless of role
+  const jobsDb = getAgentsClient(); // sales_agents lives in nyansatek-misc regardless of role
 
   try {
     let managerId = null;

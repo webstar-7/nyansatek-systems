@@ -8,7 +8,7 @@
    the client.
    ============================================================ */
 
-const { getJobsClient } = require("./_supabase");
+const { getAgentsClient } = require("./_supabase");
 const { getAuthenticatedAgent } = require("./_lib/agent-auth");
 
 exports.handler = async (event) => {
@@ -35,7 +35,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "attributionId is required" }) };
   }
 
-  const jobsDb = getJobsClient();
+  const jobsDb = getAgentsClient();
   const update = paid
     ? { status: "paid", paid_at: new Date().toISOString() }
     : { status: "unpaid", paid_at: null };

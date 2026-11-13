@@ -1,7 +1,7 @@
 /* ============================================================
    Shared auth helper for the team portal's backend endpoints.
 
-   The portal signs in client-side via Supabase Auth (same POS
+   The portal signs in client-side via Supabase Auth (the nyansatek-misc
    project sales_agents.auth_user_id was created in), then sends
    that session's access token to these endpoints. sales_agents and
    sales_attributions have RLS enabled with NO policies -- on
@@ -11,7 +11,7 @@
    bypasses RLS) do the actual query once we know who's asking.
    ============================================================ */
 
-const { getJobsClient } = require("../_supabase");
+const { getAgentsClient } = require("../_supabase");
 
 async function getAuthenticatedAgent(event) {
   const authHeader = event.headers.authorization || event.headers.Authorization;
@@ -19,7 +19,7 @@ async function getAuthenticatedAgent(event) {
     return { error: "Missing authorization" };
   }
   const token = authHeader.slice(7);
-  const jobsDb = getJobsClient();
+  const jobsDb = getAgentsClient();
 
   const { data: userData, error: userErr } = await jobsDb.auth.getUser(token);
   if (userErr || !userData || !userData.user) {

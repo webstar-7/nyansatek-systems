@@ -13,6 +13,11 @@ const PROJECTS = {
     url: process.env.SUPABASE_GOLD_URL,
     key: process.env.SUPABASE_GOLD_SERVICE_ROLE_KEY,
   },
+  // nyansatek-misc: company-wide data shared across products (sales agents, commissions)
+  misc: {
+    url: process.env.SUPABASE_MISC_URL,
+    key: process.env.SUPABASE_MISC_SERVICE_ROLE_KEY,
+  },
 };
 
 const clientCache = {};
@@ -33,7 +38,12 @@ function getSupabaseFor(product) {
 }
 
 function getJobsClient() {
-  return getSupabaseFor("pos"); // provisioning_jobs always lives in the POS project
+  return getSupabaseFor("pos"); // provisioning_jobs and subscription_renewals live in the POS project
 }
 
-module.exports = { getSupabaseFor, getJobsClient };
+// sales_agents, sales_attributions and the agents' portal logins live in nyansatek-misc
+function getAgentsClient() {
+  return getSupabaseFor("misc");
+}
+
+module.exports = { getSupabaseFor, getJobsClient, getAgentsClient };

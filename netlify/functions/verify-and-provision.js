@@ -21,7 +21,7 @@
    ============================================================ */
 
 const { CATALOG } = require("./_catalog");
-const { getSupabaseFor, getJobsClient } = require("./_supabase");
+const { getSupabaseFor, getJobsClient, getAgentsClient } = require("./_supabase");
 const { generateBusinessSlug, generateTempPassword } = require("./_lib/credentials");
 const { sendSMS, sendEmail, welcomeEmailHTML } = require("./_lib/notify");
 const { addCycle, createCardSubscription, generateCommissions } = require("./_lib/billing");
@@ -186,7 +186,7 @@ exports.handler = async (event) => {
     if (order.salesCode && String(order.salesCode).trim()) {
       try {
         const code = String(order.salesCode).trim();
-        const { data: agent } = await jobsDb
+        const { data: agent } = await getAgentsClient()
           .from("sales_agents")
           .select("*")
           .ilike("code", code)

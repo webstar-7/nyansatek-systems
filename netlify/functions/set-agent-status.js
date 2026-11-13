@@ -9,7 +9,7 @@
    history or existing commission records.
    ============================================================ */
 
-const { getJobsClient } = require("./_supabase");
+const { getAgentsClient } = require("./_supabase");
 const { getAuthenticatedAgent } = require("./_lib/agent-auth");
 
 exports.handler = async (event) => {
@@ -36,7 +36,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "agentId and isActive are required" }) };
   }
 
-  const jobsDb = getJobsClient();
+  const jobsDb = getAgentsClient();
   const { error: updateErr } = await jobsDb.from("sales_agents").update({ is_active: isActive }).eq("id", agentId);
   if (updateErr) {
     return { statusCode: 500, body: JSON.stringify({ error: updateErr.message }) };
