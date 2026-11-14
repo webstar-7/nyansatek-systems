@@ -279,6 +279,8 @@ section { padding: 84px 0; position: relative; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+/* four products: two rows of two reads better than three and one */
+.products-grid-4 { grid-template-columns: repeat(2, 1fr); }
 .product-card {
   background: var(--bg-card);
   border: 1px solid var(--line);

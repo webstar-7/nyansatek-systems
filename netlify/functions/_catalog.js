@@ -36,12 +36,18 @@
    only matters once/if real Paystack Card Subscriptions get built on
    top of these.
 
-   Gold: PLACEHOLDER pricing below (GH₵350/mo, GH₵3,500/yr) -- pick
-   real numbers before going live, create matching Plans in the
-   Paystack dashboard, and paste the real paystackPlanCode values in
-   here (same as the 14 School codes above were done). Nothing else
-   in the checkout/provisioning pipeline needs to change once this
-   object and js/products.js have real numbers + codes.
+   Gold: GH₵500/mo, GH₵5,000/yr. The paystackPlanCode values below
+   are still placeholders -- create matching Plans in the Paystack
+   dashboard and paste the real codes in here (same as the 14 School
+   codes above were done). Nothing in the current one-time-payment
+   flow reads that field; only `price` is verified.
+
+   HRMS (NYANSATEK Employee Management System, nyansatek.space) is
+   NOT in this catalog on purpose: it has no provisioner yet, so a
+   checkout for it would take payment and create nothing. Its product
+   page (product-hrms.html) shows the same GH₵500/mo, GH₵5,000/yr
+   and sends buyers to WhatsApp. Add it here, in js/products.js, in
+   _supabase.js and in _provisioners/ together when that is built.
    ================================================================ */
 
 const CATALOG = {
@@ -75,11 +81,10 @@ const CATALOG = {
     name: "NYANSATEK Gold Dealership",
     loginUrl: "https://nyansatek.gold",
     plans: {
-      // TODO: PLACEHOLDER prices + plan codes -- confirm real pricing,
-      // create matching Plans in the Paystack dashboard, paste the
-      // real paystackPlanCode values here before going live.
-      standard: { label: "Monthly", price: 35000, cycle: "monthly", paystackPlanCode: "PLN_REPLACE_GOLD_MONTHLY" },
-      yearly:   { label: "Yearly", price: 350000, cycle: "yearly", paystackPlanCode: "PLN_REPLACE_GOLD_YEARLY" },
+      // TODO: plan codes are placeholders -- create matching Plans in the
+      // Paystack dashboard and paste the real paystackPlanCode values here.
+      standard: { label: "Monthly", price: 50000, cycle: "monthly", paystackPlanCode: "PLN_REPLACE_GOLD_MONTHLY" },
+      yearly:   { label: "Yearly", price: 500000, cycle: "yearly", paystackPlanCode: "PLN_REPLACE_GOLD_YEARLY" },
     },
   },
 };
