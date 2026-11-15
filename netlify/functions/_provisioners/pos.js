@@ -167,6 +167,30 @@ async function provisionPOS({ supabase, slug, business, credentials, catalogPlan
 
 // NYANSATEK Restaurant: the same account, marked as a restaurant so it signs in at
 // nyansatek.rest and lists on nyansatek.food.
-const provisionRest = (args) => provisionPOS({ ...args, vertical: "food" });
+//
+// A restaurant that came from "List your restaurant" on nyansatek.food (business.source === "food")
+// gets the Online Menu add-on included: it is switched on with no end date (addon_paid_through
+// stays empty, so billing_daily never turns it off) and the request to join nyansatek.food is sent
+// (marketplace_status 'pending'), so the NYANSATEK team only has to approve it in /ops.
+// This step never fails the purchase: the account is already paid for and made, so if it goes
+// wrong the error is logged and the team can switch the add-on on by hand.
+async function provisionRest(args) {
+  const tenant = await provisionPOS({ ...args, vertical: "food" });
+  if (args.business && args.business.source === "food") {
+    const { error } = await args.supabase.from("shop_online_settings").upsert({
+      org_id: tenant.id,
+      addon_active: true,
+      addon_paid_through: null,
+      marketplace_status: "pending",
+      store_name: args.business.businessName,
+      shop_phone: args.business.phone,
+      whatsapp_number: args.business.phone,
+      shop_address: args.business.location,
+    }, { onConflict: "org_id" });
+    if (error) console.error(`[provisionRest] could not switch on the Online Menu add-on for ${tenant.id}: ${error.message}`);
+    else tenant.foodListing = "pending";
+  }
+  return tenant;
+}
 
 module.exports = { provisionPOS, provisionRest };

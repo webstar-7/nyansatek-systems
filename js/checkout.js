@@ -15,6 +15,10 @@ const PAYSTACK_PUBLIC_KEY = "pk_live_f06348c9521967084c78419c709c740c7d3b51d2";
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product") || "pos";
 const planId = params.get("plan") || "standard";
+// Where the buyer came from. Only known values are passed on: "food" means a restaurant
+// that clicked "List your restaurant" on nyansatek.food (its Online Menu add-on is switched
+// on and its request to join nyansatek.food is sent automatically when the account is made).
+const source = ["food"].includes(params.get("source")) ? params.get("source") : "";
 
 const product = NYANSATEK_CATALOG[productId];
 const plan = product ? product.plans[planId] : null;
@@ -125,6 +129,7 @@ els.form.addEventListener("submit", async function (e) {
       ownerName,
       phone,
       location,
+      source,
       custom_fields: [
         { display_name: "Business", variable_name: "business_name", value: businessName },
         { display_name: "Product", variable_name: "product", value: product.name },
@@ -137,7 +142,7 @@ els.form.addEventListener("submit", async function (e) {
         reference: response.reference,
         product: productId,
         plan: planId,
-        businessName, ownerName, phone, email, location, salesCode, momoProvider,
+        businessName, ownerName, phone, email, location, salesCode, momoProvider, source,
       };
       sessionStorage.setItem("nyansatek_order", JSON.stringify(payload));
       window.location.href = "success.html?ref=" + encodeURIComponent(response.reference);

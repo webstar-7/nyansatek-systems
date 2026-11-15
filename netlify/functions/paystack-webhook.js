@@ -131,6 +131,7 @@ exports.handler = async (event) => {
               phone: metadata.phone,
               email: payload.data.customer.email,
               location: metadata.location,
+              source: metadata.source,
             },
           }),
         });
