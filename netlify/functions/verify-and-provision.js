@@ -28,8 +28,9 @@ const { addCycle, createCardSubscription, generateCommissions } = require("./_li
 const { provisionPOS, provisionRest } = require("./_provisioners/pos");
 const { provisionSchool } = require("./_provisioners/school");
 const { provisionGold } = require("./_provisioners/gold");
+const { provisionHRMS } = require("./_provisioners/hrms");
 
-const PROVISIONERS = { pos: provisionPOS, rest: provisionRest, school: provisionSchool, gold: provisionGold };
+const PROVISIONERS = { pos: provisionPOS, rest: provisionRest, school: provisionSchool, gold: provisionGold, hrms: provisionHRMS };
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -152,7 +153,7 @@ exports.handler = async (event) => {
     // function) initiates a fresh charge each cycle using those same
     // details -- the customer still approves via PIN each time, which is
     // a Ghana-wide MoMo constraint, not something we can bypass.
-    const TENANT_TABLES = { pos: "organizations", rest: "organizations", school: "institutions", gold: "organizations" };
+    const TENANT_TABLES = { pos: "organizations", rest: "organizations", school: "institutions", gold: "organizations", hrms: "organizations" };
     const tenantTable = TENANT_TABLES[order.product];
     const channel = txn.channel; // 'card' | 'mobile_money' (as returned by Paystack's verify endpoint)
     const paidThroughDate = addCycle(new Date(), catalogPlan.cycle);
@@ -199,7 +200,15 @@ exports.handler = async (event) => {
     }
     if (matchedAgentId) billingUpdate.sales_agent_id = matchedAgentId;
 
-    await tenantDb.from(tenantTable).update(billingUpdate).eq("id", tenant.id);
+    if (order.product === "hrms") {
+      // HRMS keeps the plan on the organization row (which its members can read) and the payment
+      // details in hrms.org_billing (which they cannot). Its status column is `status`.
+      const { paid_through_date, subscription_status, ...paymentDetails } = billingUpdate;
+      await tenantDb.from("organizations").update({ paid_through_date, status: subscription_status }).eq("id", tenant.id);
+      await tenantDb.from("org_billing").update({ ...paymentDetails, updated_at: new Date().toISOString() }).eq("org_id", tenant.id);
+    } else {
+      await tenantDb.from(tenantTable).update(billingUpdate).eq("id", tenant.id);
+    }
 
     if (matchedAgentId) {
       try {
@@ -232,7 +241,8 @@ exports.handler = async (event) => {
     //   - School: the login screen takes an email directly (teachers/
     //     parents log in by email too) -- the slug isn't an email at
     //     all, and the field HTML5-validates as one.
-    const loginIdentifier = order.product === "school" ? order.email : order.businessName; // POS, Restaurant and Gold: the business name
+    // School and HRMS sign in with the email; POS, Restaurant and Gold with the business name
+    const loginIdentifier = order.product === "school" || order.product === "hrms" ? order.email : order.businessName;
 
     const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
     await Promise.allSettled([

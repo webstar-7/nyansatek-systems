@@ -7,7 +7,9 @@
 
 const ALLOWED_ORIGINS = [
   "https://nyansatek.shop",
+  "https://nyansatek.rest",   // NYANSATEK Restaurant: the same billing calls as POS
   "https://nyansatek.school",
+  "https://nyansatek.space",  // NYANSATEK HRMS: renewals from Settings > Your plan
   "https://nyansatek.systems",
 ];
 

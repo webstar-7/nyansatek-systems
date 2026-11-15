@@ -49,6 +49,17 @@ const NYANSATEK_CATALOG = {
       standard: { label: "Monthly", price: 50000, cycle: "monthly", cycleLabel: "per month" },
       yearly:   { label: "Yearly", price: 500000, cycle: "yearly", cycleLabel: "per year" }
     }
+  },
+  // The NYANSATEK Employee Management System. The owner signs in with their email, not a business name.
+  hrms: {
+    name: "NYANSATEK HRMS",
+    liveUrl: "https://nyansatek.space",
+    loginBy: "email",
+    plans: {
+      // GH₵500 per month, GH₵5,000 per year. Keep in sync with _catalog.js.
+      standard: { label: "Monthly", price: 50000, cycle: "monthly", cycleLabel: "per month" },
+      yearly:   { label: "Yearly", price: 500000, cycle: "yearly", cycleLabel: "per year" }
+    }
   }
 };
 

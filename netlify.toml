@@ -24,5 +24,7 @@
 #   PAYSTACK_SECRET_KEY
 #   SUPABASE_POS_URL / SUPABASE_POS_SERVICE_ROLE_KEY        (nyansatek.shop's project — also holds provisioning_jobs)
 #   SUPABASE_SCHOOL_URL / SUPABASE_SCHOOL_SERVICE_ROLE_KEY  (nyansatek-attendance's project)
+#   SUPABASE_HRMS_URL / SUPABASE_HRMS_SERVICE_ROLE_KEY      (nyansatek-hrms's project; until both are set,
+#                                                            the checkout refuses HRMS orders before payment)
 #   HUBTEL_CLIENT_ID / HUBTEL_CLIENT_SECRET / HUBTEL_SENDER_ID
 #   RESEND_API_KEY / EMAIL_FROM

@@ -18,6 +18,12 @@ const PROJECTS = {
     url: process.env.SUPABASE_GOLD_URL,
     key: process.env.SUPABASE_GOLD_SERVICE_ROLE_KEY,
   },
+  // NYANSATEK HRMS (nyansatek.space): its tables live in the `hrms` schema, not `public`
+  hrms: {
+    url: process.env.SUPABASE_HRMS_URL,
+    key: process.env.SUPABASE_HRMS_SERVICE_ROLE_KEY,
+    schema: "hrms",
+  },
   // nyansatek-misc: company-wide data shared across products (sales agents, commissions)
   misc: {
     url: process.env.SUPABASE_MISC_URL,
@@ -37,6 +43,7 @@ function getSupabaseFor(product) {
   if (!clientCache[product]) {
     clientCache[product] = createClient(cfg.url, cfg.key, {
       auth: { persistSession: false, autoRefreshToken: false },
+      ...(cfg.schema ? { db: { schema: cfg.schema } } : {}),
     });
   }
   return clientCache[product];
@@ -51,4 +58,11 @@ function getAgentsClient() {
   return getSupabaseFor("misc");
 }
 
-module.exports = { getSupabaseFor, getJobsClient, getAgentsClient };
+// True when a product's database keys are set in Netlify. The checkout asks this BEFORE taking
+// payment (see checkout-ready.js), so nobody is charged for a product that cannot be delivered.
+function isConfigured(product) {
+  const cfg = PROJECTS[product];
+  return !!(cfg && cfg.url && cfg.key);
+}
+
+module.exports = { getSupabaseFor, getJobsClient, getAgentsClient, isConfigured };

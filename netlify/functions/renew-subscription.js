@@ -16,7 +16,9 @@ const { getSupabaseFor, getJobsClient } = require("./_supabase");
 const { addCycle, generateCommissions } = require("./_lib/billing");
 const { corsHeaders, handlePreflight } = require("./_lib/cors");
 
-const TENANT_TABLES = { pos: "organizations", school: "institutions" };
+const TENANT_TABLES = { pos: "organizations", school: "institutions", hrms: "organizations" };
+// HRMS calls its status column `status`; POS and School call it `subscription_status`.
+const STATUS_COLUMN = { hrms: "status" };
 
 exports.handler = async (event) => {
   const preflight = handlePreflight(event);
@@ -87,7 +89,7 @@ exports.handler = async (event) => {
     // Extend from the CURRENT due date, not today -- paying early tops
     // up the existing cycle rather than shifting it forward.
     const newPaidThrough = addCycle(tenant.paid_through_date || new Date(), catalogPlan.cycle);
-    await db.from(table).update({ paid_through_date: newPaidThrough, subscription_status: "active" }).eq("id", tenantId);
+    await db.from(table).update({ paid_through_date: newPaidThrough, [STATUS_COLUMN[tenantProduct] || "subscription_status"]: "active" }).eq("id", tenantId);
 
     if (tenant.sales_agent_id) {
       try {

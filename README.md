@@ -94,6 +94,9 @@ SUPABASE_POS_SERVICE_ROLE_KEY    (server only — full DB access to that project
 SUPABASE_SCHOOL_URL              https://yyyy.supabase.co   (nyansatek-attendance's project)
 SUPABASE_SCHOOL_SERVICE_ROLE_KEY (server only — full DB access to that project)
 
+SUPABASE_HRMS_URL                https://zzzz.supabase.co   (nyansatek-hrms's project, for NYANSATEK HRMS)
+SUPABASE_HRMS_SERVICE_ROLE_KEY   (server only — until both are set, checkout refuses HRMS orders before payment)
+
 HUBTEL_CLIENT_ID
 HUBTEL_CLIENT_SECRET
 HUBTEL_SENDER_ID             e.g. NYANSATEK (must be pre-approved with Hubtel)

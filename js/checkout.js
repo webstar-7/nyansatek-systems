@@ -54,9 +54,32 @@ if (!product || !plan) {
   els.sCycle.textContent = plan.cycleLabel;
   els.total.textContent = formatGHS(plan.price);
   document.title = `Checkout — ${product.name} — NYANSATEK Systems`;
+  // Products you sign in to with an email (HRMS): the name is the organization's name, not a login.
+  if (product.loginBy === "email") {
+    const nameLabel = document.querySelector('label[for="businessName"]');
+    const nameHint = document.querySelector("#businessName + .hint");
+    const emailHint = document.querySelector("#email + .hint");
+    if (nameLabel) nameLabel.textContent = "Organization name";
+    if (nameHint) nameHint.textContent = "Shown to your staff inside the app. You can change it later.";
+    if (emailHint) emailHint.textContent = "You sign in with this email. Your receipt and temporary password go here too.";
+  }
 }
 
-els.form.addEventListener("submit", function (e) {
+// Can this product be delivered right now? Asked before any payment is taken (see checkout-ready.js).
+// Only a clear "no" stops the checkout: if the question itself cannot be asked (offline blip, the
+// function not deployed yet), we carry on exactly as before rather than turn every buyer away.
+async function checkoutReady() {
+  try {
+    const res = await fetch("/.netlify/functions/checkout-ready?product=" + encodeURIComponent(productId), { cache: "no-store" });
+    if (!res.ok) return true;
+    const json = await res.json();
+    return json.ready !== false;
+  } catch (e) {
+    return true;
+  }
+}
+
+els.form.addEventListener("submit", async function (e) {
   e.preventDefault();
   if (!product || !plan) return;
 
@@ -74,6 +97,13 @@ els.form.addEventListener("submit", function (e) {
   }
 
   els.payBtn.disabled = true;
+  els.payBtn.textContent = "Checking…";
+  if (!(await checkoutReady())) {
+    els.payBtn.disabled = false;
+    els.payBtn.textContent = "Pay with Mobile Money or Card";
+    showError("We can't take online orders for " + product.name + " right now, so nothing has been charged. Please call or WhatsApp 0536 340 578 and we will set you up.");
+    return;
+  }
   els.payBtn.textContent = "Opening payment window…";
 
   // Reference generated client-side for tracking; the backend

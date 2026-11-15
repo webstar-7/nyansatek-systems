@@ -42,12 +42,14 @@
    codes above were done). Nothing in the current one-time-payment
    flow reads that field; only `price` is verified.
 
-   HRMS (NYANSATEK Employee Management System, nyansatek.space) is
-   NOT in this catalog on purpose: it has no provisioner yet, so a
-   checkout for it would take payment and create nothing. Its product
-   page (product-hrms.html) shows the same GH₵500/mo, GH₵5,000/yr
-   and sends buyers to WhatsApp. Add it here, in js/products.js, in
-   _supabase.js and in _provisioners/ together when that is built.
+   HRMS ("hrms", nyansatek.space): the NYANSATEK Employee Management
+   System, in its own Supabase project (nyansatek-hrms). GH₵500/mo,
+   GH₵5,000/yr. No Paystack plan codes yet, so a card payment does not
+   create an automatic subscription: the owner renews from inside the
+   app (Settings > Your plan), which calls renew-subscription.js.
+   Needs SUPABASE_HRMS_URL and SUPABASE_HRMS_SERVICE_ROLE_KEY in
+   Netlify; until they are set, checkout-ready.js stops the checkout
+   before any payment is taken.
 
    Restaurant ("rest", nyansatek.rest): the restaurant edition of POS.
    Same plans and prices as POS, and the same database: a restaurant is
@@ -98,6 +100,16 @@ const CATALOG = {
       // Paystack dashboard and paste the real paystackPlanCode values here.
       standard: { label: "Monthly", price: 50000, cycle: "monthly", paystackPlanCode: "PLN_REPLACE_GOLD_MONTHLY" },
       yearly:   { label: "Yearly", price: 500000, cycle: "yearly", paystackPlanCode: "PLN_REPLACE_GOLD_YEARLY" },
+    },
+  },
+  hrms: {
+    name: "NYANSATEK HRMS",
+    loginUrl: "https://nyansatek.space",
+    plans: {
+      // paystackPlanCode is null on purpose: no Paystack Plans exist for HRMS yet, and null makes
+      // createCardSubscription skip cleanly instead of calling Paystack with a made-up code.
+      standard: { label: "Monthly", price: 50000, cycle: "monthly", paystackPlanCode: null },
+      yearly:   { label: "Yearly", price: 500000, cycle: "yearly", paystackPlanCode: null },
     },
   },
 };

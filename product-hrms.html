@@ -55,7 +55,7 @@
       <a href="platform.html#feedback">Feedback</a>
       <a href="https://nyansatek.space" target="_blank" rel="noopener">Existing customer? Sign in</a>
     </nav>
-    <a href="#plans" class="btn btn-gold">See plans</a>
+    <a href="checkout.html?product=hrms&plan=standard" class="btn btn-gold">Buy now</a>
     <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <svg class="icon-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
@@ -107,21 +107,20 @@
       <h3 style="font-size:18px; margin-bottom:18px;">Choose a plan</h3>
 
       <label class="plan-option selected">
-        <span class="plan-label"><input type="radio" name="plan" value="Monthly (GH₵500 per month)" checked> Monthly</span>
+        <span class="plan-label"><input type="radio" name="plan" value="standard" checked> Monthly</span>
         <span class="plan-price">GH₵500/mo</span>
       </label>
       <label class="plan-option">
-        <span class="plan-label"><input type="radio" name="plan" value="Yearly (GH₵5,000 per year)"> Yearly</span>
+        <span class="plan-label"><input type="radio" name="plan" value="yearly"> Yearly</span>
         <span class="plan-price">GH₵5,000/yr</span>
       </label>
       <p style="font-size:12.5px; color:var(--text-dim); margin:10px 0 0;">
         Every feature and every staff login is included on both plans.
       </p>
 
-      <a href="#" target="_blank" rel="noopener" class="btn btn-gold btn-block" style="margin-top:14px;" id="hrms-order-link">Order on WhatsApp</a>
+      <a href="checkout.html?product=hrms&plan=standard" class="btn btn-gold btn-block" style="margin-top:14px;" id="hrms-checkout-link">Continue to checkout</a>
       <p style="font-size:12.5px; color:var(--text-faint); margin-top:14px;">
-        No setup fee. Tell us the plan you want and we set up your organization with you.
-        Prefer to call? <a href="tel:0536340578" style="color:var(--gold);">0536 340 578</a>.
+        No setup fee. You sign in with your email; the login details are sent by SMS and email right after payment.
       </p>
     </div>
   </div>
@@ -185,21 +184,13 @@
 </footer>
 
 <script>
-  // HRMS is ordered through WhatsApp: the message carries the plan chosen above.
-  (function () {
-    var link = document.getElementById('hrms-order-link');
-    function setLink(plan) {
-      link.href = 'https://wa.me/233536340578?text=' + encodeURIComponent("Hi NYANSATEK, I'd like NYANSATEK HRMS on the " + plan + " plan.");
-    }
-    document.querySelectorAll('.plan-option input[name="plan"]').forEach(function (radio) {
-      if (radio.checked) setLink(radio.value);
-      radio.addEventListener('change', function () {
-        document.querySelectorAll('.plan-option').forEach(function (opt) { opt.classList.remove('selected'); });
-        this.closest('.plan-option').classList.add('selected');
-        setLink(this.value);
-      });
+  document.querySelectorAll('.plan-option input[name="plan"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      document.querySelectorAll('.plan-option').forEach(opt => opt.classList.remove('selected'));
+      this.closest('.plan-option').classList.add('selected');
+      document.getElementById('hrms-checkout-link').href = 'checkout.html?product=hrms&plan=' + this.value;
     });
-  })();
+  });
 </script>
 
 
