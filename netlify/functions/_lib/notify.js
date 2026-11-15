@@ -44,17 +44,24 @@ async function sendEmail({ to, subject, html }) {
   return res.json();
 }
 
-// foodListing: "pending" when a restaurant signed up from nyansatek.food and its request to join
-// is waiting for approval (see provisionRest); the email then tells it what to do in the meantime.
-function welcomeEmailHTML({ ownerName, productName, loginUrl, username, tempPassword, foodListing }) {
-  const foodBlock = foodListing === "pending" ? `
+// marketListing: set when a business signed up from its marketplace and its request to join is
+// waiting for approval (see _provisioners/pos.js); the email then says what to do in the meantime.
+const MARKET_STEPS = {
+  shop: ["Add your products with prices and photos: <strong>Admin Inventory &rarr; + Create</strong>.",
+         "Set up your shop page: <strong>Settings &rarr; Online Shop</strong>.",
+         "Once you are approved, tick <strong>List on nyansatek.store</strong> on the products you want there."],
+  food: ["Add your dishes with prices and photos: <strong>Menu &rarr; + Create</strong>.",
+         "Set up your menu page: <strong>Settings &rarr; Online Menu</strong>.",
+         "Once you are approved, tick <strong>List on nyansatek.food</strong> on the dishes you want there."],
+};
+function welcomeEmailHTML({ ownerName, productName, loginUrl, username, tempPassword, marketListing }) {
+  const steps = marketListing && MARKET_STEPS[marketListing.vertical];
+  const foodBlock = steps ? `
     <div style="background:#FFF4E6; border:1px solid #F6D3A8; border-radius:10px; padding:14px 16px; margin:18px 0;">
-      <p style="margin:0 0 6px; font-weight:bold; color:#8A3409;">Your nyansatek.food request is in review</p>
-      <p style="margin:0 0 6px;">Your online menu is switched on and your request to join nyansatek.food has been sent. While the NYANSATEK team reviews your restaurant:</p>
-      <ol style="margin:0; padding-left:18px;">
-        <li>Add your dishes with prices and photos: <strong>Menu &rarr; + Create</strong>.</li>
-        <li>Set up your menu page: <strong>Settings &rarr; Online Menu</strong>.</li>
-        <li>Once you are approved, tick <strong>List on nyansatek.food</strong> on the dishes you want there.</li>
+      <p style="margin:0 0 6px; font-weight:bold; color:#8A3409;">Your ${marketListing.site} request is in review</p>
+      <p style="margin:0 0 6px;">Your ${marketListing.vertical === "food" ? "online menu" : "online shop"} is switched on and your request to join ${marketListing.site} has been sent. While the NYANSATEK team reviews your ${marketListing.vertical === "food" ? "restaurant" : "shop"}:</p>
+      <ol style="margin:0; padding-left:18px;">${steps.map((x) => `
+        <li>${x}</li>`).join("")}
       </ol>
     </div>` : "";
   return `

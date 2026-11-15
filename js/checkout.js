@@ -15,10 +15,11 @@ const PAYSTACK_PUBLIC_KEY = "pk_live_f06348c9521967084c78419c709c740c7d3b51d2";
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product") || "pos";
 const planId = params.get("plan") || "standard";
-// Where the buyer came from. Only known values are passed on: "food" means a restaurant
-// that clicked "List your restaurant" on nyansatek.food (its Online Menu add-on is switched
-// on and its request to join nyansatek.food is sent automatically when the account is made).
-const source = ["food"].includes(params.get("source")) ? params.get("source") : "";
+// Where the buyer came from. Only known values are passed on: "store" (a shop from "List your
+// shop" on nyansatek.store) or "food" (a restaurant from "List your restaurant" on nyansatek.food).
+// Its online add-on is then switched on and its request to join that marketplace sent automatically
+// when the account is made (see _provisioners/pos.js).
+const source = ["store", "food"].includes(params.get("source")) ? params.get("source") : "";
 
 const product = NYANSATEK_CATALOG[productId];
 const plan = product ? product.plans[planId] : null;

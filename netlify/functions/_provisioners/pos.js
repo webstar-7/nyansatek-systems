@@ -64,7 +64,7 @@
    ============================================================ */
 
 // `vertical` is 'shop' for NYANSATEK POS and 'food' for NYANSATEK Restaurant (see provisionRest below).
-async function provisionPOS({ supabase, slug, business, credentials, catalogPlan, reference, vertical = "shop" }) {
+async function createAccount({ supabase, slug, business, credentials, catalogPlan, reference, vertical = "shop" }) {
   // Store count is no longer plan-gated -- with only 2 plans left
   // (monthly/yearly, see _catalog.js), the 3-store rebuild is available
   // to every POS customer regardless of billing cycle.
@@ -165,32 +165,37 @@ async function provisionPOS({ supabase, slug, business, credentials, catalogPlan
   }
 }
 
-// NYANSATEK Restaurant: the same account, marked as a restaurant so it signs in at
-// nyansatek.rest and lists on nyansatek.food.
-//
-// A restaurant that came from "List your restaurant" on nyansatek.food (business.source === "food")
-// gets the Online Menu add-on included: it is switched on with no end date (addon_paid_through
-// stays empty, so billing_daily never turns it off) and the request to join nyansatek.food is sent
-// (marketplace_status 'pending'), so the NYANSATEK team only has to approve it in /ops.
-// This step never fails the purchase: the account is already paid for and made, so if it goes
-// wrong the error is logged and the team can switch the add-on on by hand.
-async function provisionRest(args) {
-  const tenant = await provisionPOS({ ...args, vertical: "food" });
-  if (args.business && args.business.source === "food") {
-    const { error } = await args.supabase.from("shop_online_settings").upsert({
-      org_id: tenant.id,
-      addon_active: true,
-      addon_paid_through: null,
-      marketplace_status: "pending",
-      store_name: args.business.businessName,
-      shop_phone: args.business.phone,
-      whatsapp_number: args.business.phone,
-      shop_address: args.business.location,
-    }, { onConflict: "org_id" });
-    if (error) console.error(`[provisionRest] could not switch on the Online Menu add-on for ${tenant.id}: ${error.message}`);
-    else tenant.foodListing = "pending";
-  }
+// Marketplace sign-ups. A business that came from the "list your shop / restaurant" page on its
+// marketplace (business.source: "store" for NYANSATEK POS on nyansatek.store, "food" for NYANSATEK
+// Restaurant on nyansatek.food) gets the online add-on included: it is switched on with no end date
+// (addon_paid_through stays empty, so billing_daily never turns it off) and the request to join the
+// marketplace is sent (marketplace_status 'pending'), so the NYANSATEK team only has to approve it
+// in nyansatek.store/ops. This step never fails a paid purchase: the account is already made, so if
+// it goes wrong the error is logged and the team can switch the add-on on by hand.
+const MARKETS = { shop: { source: "store", site: "nyansatek.store" }, food: { source: "food", site: "nyansatek.food" } };
+
+async function joinMarketplace({ supabase, business }, tenant, vertical) {
+  const market = MARKETS[vertical];
+  if (!market || !business || business.source !== market.source) return tenant;
+  const { error } = await supabase.from("shop_online_settings").upsert({
+    org_id: tenant.id,
+    addon_active: true,
+    addon_paid_through: null,
+    marketplace_status: "pending",
+    store_name: business.businessName,
+    shop_phone: business.phone,
+    whatsapp_number: business.phone,
+    shop_address: business.location,
+  }, { onConflict: "org_id" });
+  if (error) console.error(`[provision ${vertical}] could not switch on the online add-on for ${tenant.id}: ${error.message}`);
+  else tenant.marketListing = { site: market.site, vertical, status: "pending" };
   return tenant;
 }
+
+// NYANSATEK POS: signs in at nyansatek.shop and lists on nyansatek.store.
+const provisionPOS = async (args) => joinMarketplace(args, await createAccount({ ...args, vertical: "shop" }), "shop");
+// NYANSATEK Restaurant: the same account, marked as a restaurant so it signs in at
+// nyansatek.rest and lists on nyansatek.food.
+const provisionRest = async (args) => joinMarketplace(args, await createAccount({ ...args, vertical: "food" }), "food");
 
 module.exports = { provisionPOS, provisionRest };

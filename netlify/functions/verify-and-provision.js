@@ -245,8 +245,8 @@ exports.handler = async (event) => {
     const loginIdentifier = order.product === "school" || order.product === "hrms" ? order.email : order.businessName;
 
     let smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
-    // Restaurants that signed up from nyansatek.food (see provisionRest): say their listing is in review.
-    if (tenant.foodListing === "pending") smsText += " | Your nyansatek.food request is in review. Add your dishes with photos meanwhile.";
+    // Businesses that signed up from their marketplace (see _provisioners/pos.js): say their listing is in review.
+    if (tenant.marketListing) smsText += ` | Your ${tenant.marketListing.site} request is in review. Add your ${tenant.marketListing.vertical === "food" ? "dishes" : "products"} with photos meanwhile.`;
     await Promise.allSettled([
       sendSMS(order.phone, smsText),
       sendEmail({
@@ -258,7 +258,7 @@ exports.handler = async (event) => {
           loginUrl: catalogProduct.loginUrl,
           username: loginIdentifier,
           tempPassword,
-          foodListing: tenant.foodListing,
+          marketListing: tenant.marketListing,
         }),
       }),
     ]);
