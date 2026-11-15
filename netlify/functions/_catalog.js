@@ -48,16 +48,29 @@
    page (product-hrms.html) shows the same GH₵500/mo, GH₵5,000/yr
    and sends buyers to WhatsApp. Add it here, in js/products.js, in
    _supabase.js and in _provisioners/ together when that is built.
+
+   Restaurant ("rest", nyansatek.rest): the restaurant edition of POS.
+   Same plans and prices as POS, and the same database: a restaurant is
+   an organizations row with vertical = 'food'. After sign-up it is
+   billed exactly like a POS tenant (renewals arrive as tenantProduct
+   "pos"), so "rest" only exists as a checkout product.
    ================================================================ */
 
+const POS_PLANS = {
+  standard: { label: "Monthly", price: 20000, cycle: "monthly", paystackPlanCode: "PLN_ez02qfzpibedqdc" },
+  yearly:   { label: "Yearly", price: 200000, cycle: "yearly", paystackPlanCode: "PLN_dkear4a4gtcs5lo" },
+};
+
 const CATALOG = {
+  rest: {
+    name: "NYANSATEK Restaurant",
+    loginUrl: "https://nyansatek.rest",
+    plans: POS_PLANS, // same plans as POS, on purpose
+  },
   pos: {
     name: "NYANSATEK POS",
     loginUrl: "https://nyansatek.shop",
-    plans: {
-      standard: { label: "Monthly", price: 20000, cycle: "monthly", paystackPlanCode: "PLN_ez02qfzpibedqdc" },
-      yearly:   { label: "Yearly", price: 200000, cycle: "yearly", paystackPlanCode: "PLN_dkear4a4gtcs5lo" },
-    },
+    plans: POS_PLANS,
   },
   school: {
     name: "NYANSATEK School",

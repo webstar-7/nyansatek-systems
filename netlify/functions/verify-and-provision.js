@@ -25,11 +25,11 @@ const { getSupabaseFor, getJobsClient, getAgentsClient } = require("./_supabase"
 const { generateBusinessSlug, generateTempPassword } = require("./_lib/credentials");
 const { sendSMS, sendEmail, welcomeEmailHTML } = require("./_lib/notify");
 const { addCycle, createCardSubscription, generateCommissions } = require("./_lib/billing");
-const { provisionPOS } = require("./_provisioners/pos");
+const { provisionPOS, provisionRest } = require("./_provisioners/pos");
 const { provisionSchool } = require("./_provisioners/school");
 const { provisionGold } = require("./_provisioners/gold");
 
-const PROVISIONERS = { pos: provisionPOS, school: provisionSchool, gold: provisionGold };
+const PROVISIONERS = { pos: provisionPOS, rest: provisionRest, school: provisionSchool, gold: provisionGold };
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -152,7 +152,7 @@ exports.handler = async (event) => {
     // function) initiates a fresh charge each cycle using those same
     // details -- the customer still approves via PIN each time, which is
     // a Ghana-wide MoMo constraint, not something we can bypass.
-    const TENANT_TABLES = { pos: "organizations", school: "institutions", gold: "organizations" };
+    const TENANT_TABLES = { pos: "organizations", rest: "organizations", school: "institutions", gold: "organizations" };
     const tenantTable = TENANT_TABLES[order.product];
     const channel = txn.channel; // 'card' | 'mobile_money' (as returned by Paystack's verify endpoint)
     const paidThroughDate = addCycle(new Date(), catalogPlan.cycle);
@@ -204,7 +204,8 @@ exports.handler = async (event) => {
     if (matchedAgentId) {
       try {
         await generateCommissions(jobsDb, {
-          tenantProduct: order.product,
+          // a restaurant is billed as a POS tenant from here on, so its commissions are filed under "pos" too
+          tenantProduct: order.product === "rest" ? "pos" : order.product,
           tenantId: tenant.id,
           agentId: matchedAgentId,
           reference,
@@ -231,7 +232,7 @@ exports.handler = async (event) => {
     //   - School: the login screen takes an email directly (teachers/
     //     parents log in by email too) -- the slug isn't an email at
     //     all, and the field HTML5-validates as one.
-    const loginIdentifier = order.product === "school" ? order.email : order.businessName;
+    const loginIdentifier = order.product === "school" ? order.email : order.businessName; // POS, Restaurant and Gold: the business name
 
     const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
     await Promise.allSettled([

@@ -14,6 +14,15 @@ const NYANSATEK_CATALOG = {
       yearly:   { label: "Yearly", price: 200000, cycle: "yearly", cycleLabel: "per year" }
     }
   },
+  // The restaurant edition of POS: same plans and prices (keep in sync with _catalog.js).
+  rest: {
+    name: "NYANSATEK Restaurant",
+    liveUrl: "https://nyansatek.rest",
+    plans: {
+      standard: { label: "Monthly", price: 20000, cycle: "monthly", cycleLabel: "per month" },
+      yearly:   { label: "Yearly", price: 200000, cycle: "yearly", cycleLabel: "per year" }
+    }
+  },
   school: {
     name: "NYANSATEK School",
     liveUrl: "https://nyansatek.school",

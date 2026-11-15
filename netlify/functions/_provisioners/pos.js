@@ -63,7 +63,8 @@
    row via cascade, since it's tied to auth.users.id.
    ============================================================ */
 
-async function provisionPOS({ supabase, slug, business, credentials, catalogPlan, reference }) {
+// `vertical` is 'shop' for NYANSATEK POS and 'food' for NYANSATEK Restaurant (see provisionRest below).
+async function provisionPOS({ supabase, slug, business, credentials, catalogPlan, reference, vertical = "shop" }) {
   // Store count is no longer plan-gated -- with only 2 plans left
   // (monthly/yearly, see _catalog.js), the 3-store rebuild is available
   // to every POS customer regardless of billing cycle.
@@ -95,6 +96,7 @@ async function provisionPOS({ supabase, slug, business, credentials, catalogPlan
         plan_cycle: catalogPlan.cycle,
         max_stores: maxStores,
         signup_reference: reference,
+        vertical, // which app this business uses: nyansatek.shop ('shop') or nyansatek.rest ('food')
       })
       .select()
       .single();
@@ -163,4 +165,8 @@ async function provisionPOS({ supabase, slug, business, credentials, catalogPlan
   }
 }
 
-module.exports = { provisionPOS };
+// NYANSATEK Restaurant: the same account, marked as a restaurant so it signs in at
+// nyansatek.rest and lists on nyansatek.food.
+const provisionRest = (args) => provisionPOS({ ...args, vertical: "food" });
+
+module.exports = { provisionPOS, provisionRest };

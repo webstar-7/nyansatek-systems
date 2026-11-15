@@ -5,6 +5,11 @@ const PROJECTS = {
     url: process.env.SUPABASE_POS_URL,
     key: process.env.SUPABASE_POS_SERVICE_ROLE_KEY,
   },
+  // restaurants (nyansatek.rest) live in the POS project, as organizations with vertical = 'food'
+  rest: {
+    url: process.env.SUPABASE_POS_URL,
+    key: process.env.SUPABASE_POS_SERVICE_ROLE_KEY,
+  },
   school: {
     url: process.env.SUPABASE_SCHOOL_URL,
     key: process.env.SUPABASE_SCHOOL_SERVICE_ROLE_KEY,
