@@ -44,7 +44,19 @@ async function sendEmail({ to, subject, html }) {
   return res.json();
 }
 
-function welcomeEmailHTML({ ownerName, productName, loginUrl, username, tempPassword }) {
+// foodListing: "pending" when a restaurant signed up from nyansatek.food and its request to join
+// is waiting for approval (see provisionRest); the email then tells it what to do in the meantime.
+function welcomeEmailHTML({ ownerName, productName, loginUrl, username, tempPassword, foodListing }) {
+  const foodBlock = foodListing === "pending" ? `
+    <div style="background:#FFF4E6; border:1px solid #F6D3A8; border-radius:10px; padding:14px 16px; margin:18px 0;">
+      <p style="margin:0 0 6px; font-weight:bold; color:#8A3409;">Your nyansatek.food request is in review</p>
+      <p style="margin:0 0 6px;">Your online menu is switched on and your request to join nyansatek.food has been sent. While the NYANSATEK team reviews your restaurant:</p>
+      <ol style="margin:0; padding-left:18px;">
+        <li>Add your dishes with prices and photos: <strong>Menu &rarr; + Create</strong>.</li>
+        <li>Set up your menu page: <strong>Settings &rarr; Online Menu</strong>.</li>
+        <li>Once you are approved, tick <strong>List on nyansatek.food</strong> on the dishes you want there.</li>
+      </ol>
+    </div>` : "";
   return `
   <div style="font-family:Arial,sans-serif; max-width:520px; margin:0 auto; color:#1a1a1a;">
     <h2 style="color:#B98637;">Welcome to ${productName}</h2>
@@ -55,7 +67,7 @@ function welcomeEmailHTML({ ownerName, productName, loginUrl, username, tempPass
       <tr><td style="padding:8px 0; color:#555;">Username</td><td style="padding:8px 0;">${username}</td></tr>
       <tr><td style="padding:8px 0; color:#555;">Temporary password</td><td style="padding:8px 0;"><strong>${tempPassword}</strong></td></tr>
     </table>
-    <p>You'll be asked to set your own password the first time you sign in.</p>
+    <p>You'll be asked to set your own password the first time you sign in.</p>${foodBlock}
     <p>Questions? Reply to this email or call 0536 340 578.</p>
     <p>— NYANSATEK Systems</p>
   </div>`;

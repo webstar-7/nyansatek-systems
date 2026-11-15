@@ -244,7 +244,9 @@ exports.handler = async (event) => {
     // School and HRMS sign in with the email; POS, Restaurant and Gold with the business name
     const loginIdentifier = order.product === "school" || order.product === "hrms" ? order.email : order.businessName;
 
-    const smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
+    let smsText = `Welcome to ${catalogProduct.name}! Login: ${catalogProduct.loginUrl} | User: ${loginIdentifier} | Pass: ${tempPassword}`;
+    // Restaurants that signed up from nyansatek.food (see provisionRest): say their listing is in review.
+    if (tenant.foodListing === "pending") smsText += " | Your nyansatek.food request is in review. Add your dishes with photos meanwhile.";
     await Promise.allSettled([
       sendSMS(order.phone, smsText),
       sendEmail({
@@ -256,6 +258,7 @@ exports.handler = async (event) => {
           loginUrl: catalogProduct.loginUrl,
           username: loginIdentifier,
           tempPassword,
+          foodListing: tenant.foodListing,
         }),
       }),
     ]);
